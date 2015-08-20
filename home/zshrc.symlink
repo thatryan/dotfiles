@@ -1,0 +1,43 @@
+# Load main files
+source ~/.aliases
+source ~/dotfiles/terminal/functions
+source ~/dotfiles/terminal/completion
+
+# Setup prompt
+fpath+=("/usr/local/share/zsh/site-functions")
+autoload -U promptinit && promptinit
+prompt pure
+
+# makes color constants available
+autoload -U colors
+colors
+
+# enable colored output from ls, etc
+export CLICOLOR=1
+
+# History settings
+setopt hist_ignore_all_dups inc_append_history
+HISTFILE=~/.zhistory
+HISTSIZE=4096
+SAVEHIST=4096
+
+# Paths
+
+# Set the list of directories that Zsh searches for programs.
+path=(
+  /usr/local/{bin,sbin}
+  /usr/local/opt/ruby/bin
+  /usr/local/share/npm/bin
+  /usr/{bin,sbin}
+  /{bin,sbin}
+  $path
+)
+
+export NODE_PATH='/usr/local/lib/node_modules'
+
+export PATH="$HOME/.bin:$PATH"
+
+# recommended by brew doctor
+export PATH="/usr/local/bin:$PATH"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+eval "$(rbenv init - --no-rehash zsh)"
