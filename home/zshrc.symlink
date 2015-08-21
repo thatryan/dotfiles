@@ -2,6 +2,7 @@
 source ~/.aliases
 source ~/dotfiles/terminal/functions
 source ~/dotfiles/terminal/completion
+source ~/dotfiles/submodules/z/z.sh
 
 # Setup prompt
 fpath+=("/usr/local/share/zsh/site-functions")
