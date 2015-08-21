@@ -19,17 +19,22 @@ To setup clone the repository recursively from your home directory, the setup pr
 git clone --recursive git://github.com/thatryan/dotfiles.git
 ```
 
-Once cloned, run it!
+Once cloned, run it. This will do lots, create some directories, setup symlinks install brews/casks/node modules...
 
 ```bash
 $ sh setup-mac 2>&1 | tee ~/setup-mac.log
 ```
 
+After, if you wish to setup OS X preferences run,
+
+```bash
+$ ./setup-prefs
+```
+
+### Be sure you read through what the scripts do first! Questions, [just ask](https://github.com/thatryan/dotfiles/issues).
+
 ## Features
 * The [pure prompt](https://github.com/sindresorhus/pure)
-
-
-## Optional - Install These
 * Awesome [z](https://github.com/rupa/z) directory jumping
 * Sweet [syntax highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
@@ -60,12 +65,6 @@ $ sh setup-mac 2>&1 | tee ~/setup-mac.log
 
 The update process will do basically the same things as setup, but instead of downloading the dotfiles, it will just fetch the latest changes.
 
-## Personal Notes
-
-#### Migration
-
-For when I am setting up a new machine, some [reminders](migration.md)
-
 ####TODO:
 
 * Add something to track what cannot be automated for new machine setup similar to [Kevin Elliott's gist](https://gist.github.com/kevinelliott/0726211d17020a6abc1f)
@@ -80,10 +79,8 @@ These are the current apps that cannot be added via casks yet, or because I purc
 * [SEO Spider](http://www.screamingfrog.co.uk/seo-spider)
 * [Adobe Stuffs](https://www.adobe.com)
 * [Tweetbot](http://tapbots.com/tweetbot/mac)
-* [1Password](https://agilebits.com/onepassword/mac)
 
-
-#### .app's I really want and aren't in my caskfile.
+#### See if I want need to keep or add/remove apps
 
 * read `brew list` and `brew cask list` to see whats worth reinstalling
 * read `npm list -g --depth=0` to see global npm packages
@@ -91,16 +88,6 @@ These are the current apps that cannot be added via casks yet, or because I purc
 #### Alfred Workflows
 
 Sweet collection of [workflows](https://github.com/zenorocha/alfred-workflows)
-
-#### Wifi Settings and passwords
-
-`/Volumes/MacintoshHD/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist`
-
-#### Do not lose
-
-* Documents folder
-* Pics
-* ~/Sites
 
 #### Apps to re-link to their cloud prefs.
 
@@ -115,6 +102,8 @@ Sweet collection of [workflows](https://github.com/zenorocha/alfred-workflows)
 Automate somehow...?
 
 * Bartender
+* Sublime
+* Tweetbot
 * iStat menus
 * Xtra Finder
 * MAMP config / hosts
