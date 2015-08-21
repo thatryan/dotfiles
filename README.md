@@ -33,6 +33,14 @@ $ ./setup-prefs
 
 ### Be sure you read through what the scripts do first! Questions, [just ask](https://github.com/thatryan/dotfiles/issues).
 
+## Local Config Files
+I keep private infos in local files in Dropbox, so once it is setup and linked to my account I run these
+
+```bash
+ln -s ~/Dropbox/local-dotfiles/.gitconfig.local ~/.gitconfig.local
+ln -s ~/Dropbox/local-dotfiles/.aliases.local ~/.aliases.local
+```
+
 ## Features
 * The [pure prompt](https://github.com/sindresorhus/pure)
 * Awesome [z](https://github.com/rupa/z) directory jumping
