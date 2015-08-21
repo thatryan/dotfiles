@@ -5,9 +5,6 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias cd..="cd .."
 
-# | SSH
-alias pagely="ssh ryan@sequoiaims.pagelydev.com"
-
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
 # | Network
@@ -61,3 +58,6 @@ alias dig="dig +nocmd any +multiline +noall +answer"
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache"
+
+# Include custom aliases
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local

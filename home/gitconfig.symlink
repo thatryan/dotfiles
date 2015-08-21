@@ -1,10 +1,3 @@
-[user]
-    name = Ryan Olson
-    email = ryan@thatryan.com
-
-[github]
-  user = thatryan
-
 [alias]
 
     c = commit -am
@@ -37,9 +30,7 @@
     untracked = red reverse
 
 [core]
-    attributesfile = ~/.gitattributes
     autocrlf = input
-    editor = "subl -n -w"
     excludesfile = ~/.gitignore
 
 [url "git@github.com:"]
@@ -55,7 +46,5 @@
     pushInsteadOf = "git://gist.github.com/"
     pushInsteadOf = "https://gist.github.com/"
 
-# Any GitHub repo with my username should be checked out r/w by default
-# http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
-[url "git@github.com:thatryan/"]
-  insteadOf = "git://github.com/thatryan/"
+[include]
+  path = ~/.gitconfig.local
