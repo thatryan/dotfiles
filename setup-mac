@@ -287,3 +287,5 @@ fancy_echo "Configuring Bundler ..."
   gem_install_or_update 'neat'
 
   rbenv rehash
+
+fancy_echo "Remember to setup ssh yo, https://help.github.com/articles/generating-ssh-keys/"
