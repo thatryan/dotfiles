@@ -162,6 +162,7 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'watch'
+brew_install_or_upgrade 'bradp/vv/vv'
 
 # More recent versions
 brew_install_or_upgrade 'coreutils'
@@ -273,6 +274,7 @@ fancy_echo "Configuring Bundler ..."
   fancy_echo "Node packages ..."
 
   # Node packages
+  npm install -g gulp
   npm install -g grunt-cli
   npm install -g bower
   npm install -g pure-prompt
@@ -281,5 +283,7 @@ fancy_echo "Configuring Bundler ..."
 
   # Gems
   gem_install_or_update 'sass'
+  gem_install_or_update 'bourbon'
+  gem_install_or_update 'neat'
 
   rbenv rehash
