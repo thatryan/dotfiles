@@ -216,6 +216,7 @@ fancy_echo "Configuring Bundler ..."
   brew cask install alfred
   brew cask install backblaze
   brew cask install bartender
+  brew cask install carbon-copy-cloner
   brew cask install cleanmymac
   brew cask install codekit
   brew cask install dropbox
