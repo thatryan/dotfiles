@@ -461,14 +461,22 @@ defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true
 # Don’t show the preferences window on next start
 defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
 
+
+###############################################################################
+# Tweetbot.app                                                                #
+###############################################################################
+
+# Bypass the annoyingly slow t.co URL shortener
+defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
+
 ###############################################################################
 # Sublime Text                                                                #
 ###############################################################################
 
 # Install Sublime Text settings
-# cp -r sublime/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
+cp -r sublime/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
 
-# cp -r sublime/Default\ (OSX).sublime-keymap ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Default\ (OSX).sublime-keymap 2> /dev/null
+cp -r sublime/Default\ (OSX).sublime-keymap ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Default\ (OSX).sublime-keymap 2> /dev/null
 
 ###############################################################################
 # Kill affected applications                                                  #
@@ -477,7 +485,7 @@ defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   "Dock" "Finder" "Google Chrome" "Mail" "Messages" \
   "Safari" "SizeUp" "SystemUIServer" "Terminal" \
-  "iCal"; do
+  "tweetbot" "iCal"; do
   killall "${app}" > /dev/null 2>&1
 done
 
