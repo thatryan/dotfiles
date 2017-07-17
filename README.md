@@ -68,15 +68,6 @@ Hey, there may be bugs in here. If you play around with this and find something 
 
 If you decide to fork this project, be sure you substitute my name and info with yours in the initial setup clone and in the gitconfig.
 
-## Updating
-
-To update the dotfiles, just run script.
-
-```bash
-$ sh setup-mac 2>&1 | tee ~/setup-mac.log
-```
-
-The update process will do basically the same things as setup, but instead of downloading the dotfiles, it will just fetch the latest changes.
 
 ####TODO:
 
@@ -89,29 +80,21 @@ The update process will do basically the same things as setup, but instead of do
 
 * read `brew list` and `brew cask list` to see whats worth reinstalling
 * read `npm list -g --depth=0` to see global npm packages
-
-#### Alfred Workflows
-
-Sweet collection of [workflows](https://github.com/zenorocha/alfred-workflows)
+* read `gem list` to see current gem files
 
 #### Apps to re-link to their cloud prefs.
 
 * 1Password
 * Dropbox
 * Transmit
-* Text Expander
-* Glui
 
 #### Other app settings
 
 Automate somehow...?
 
-* Bartender
 * Sublime
 * Tweetbot
 * iStat menus
-* Xtra Finder
-* MAMP config / hosts
 
 ## Acknowledgements
 
