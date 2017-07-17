@@ -56,10 +56,6 @@ if [ ! -d "$HOME/github/" ]; then
   mkdir "$HOME/github"
 fi
 
-if [ ! -d "$HOME/mamp/" ]; then
-  mkdir "$HOME/mamp"
-fi
-
 if [ ! -d "$HOME/vagrant/" ]; then
   mkdir "$HOME/vagrant"
 fi
@@ -70,62 +66,40 @@ fi
 
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
+HOMEBREW_PREFIX="/usr/local"
+
+if [ -d "$HOMEBREW_PREFIX" ]; then
+  if ! [ -r "$HOMEBREW_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local
+  fi
+else
+  sudo mkdir "$HOMEBREW_PREFIX"
+  sudo chflags norestricted "$HOMEBREW_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+fi
+
+update_shell() {
+  local shell_path;
+  shell_path="$(which zsh)"
+
+  fancy_echo "Changing your shell to zsh ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    fancy_echo "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+  chsh -s "$shell_path"
+}
+
 case "$SHELL" in
-  */zsh) : ;;
+  */zsh)
+    if [ "$(which zsh)" != '/usr/local/bin/zsh' ] ; then
+      update_shell
+    fi
+    ;;
   *)
-    fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
+    update_shell
     ;;
 esac
-
-brew_install_or_upgrade() {
-  if brew_is_installed "$1"; then
-    if brew_is_upgradable "$1"; then
-      fancy_echo "Upgrading %s ..." "$1"
-      brew upgrade "$@"
-    else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-    fi
-  else
-    fancy_echo "Installing %s ..." "$1"
-    brew install "$@"
-  fi
-}
-
-brew_is_installed() {
-  local name="$(brew_expand_alias "$1")"
-
-  brew list -1 | grep -Fqx "$name"
-}
-
-brew_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
-
-  ! brew outdated --quiet "$name" >/dev/null
-}
-
-brew_tap() {
-  brew tap "$1" 2> /dev/null
-}
-
-brew_expand_alias() {
-  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
-}
-
-brew_launchctl_restart() {
-  local name="$(brew_expand_alias "$1")"
-  local domain="homebrew.mxcl.$name"
-  local plist="$domain.plist"
-
-  fancy_echo "Restarting %s ..." "$1"
-  mkdir -p "$HOME/Library/LaunchAgents"
-  ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
-
-  if launchctl list | grep -Fq "$domain"; then
-    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
-  fi
-  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
-}
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
@@ -145,149 +119,151 @@ if ! command -v brew >/dev/null; then
 
     append_to_zshrc '# recommended by brew doctor'
 
+    # shellcheck disable=SC2016
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
 
     export PATH="/usr/local/bin:$PATH"
-else
-  fancy_echo "Homebrew already installed. Skipping ..."
+fi
+
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
 fi
 
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-brew_install_or_upgrade 'zsh'
-brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'ack'
-brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'node'
-brew_install_or_upgrade 'tree'
-brew_install_or_upgrade 'watch'
-brew_install_or_upgrade 'bradp/vv/vv'
+fancy_echo "Installing Homebrew formulas ..."
+brew install 'zsh'
+brew install 'git'
+brew install 'the_silver_searcher'
+brew install 'vim --with-override-system-vi'
+brew install 'imagemagick'
+brew install 'node'
+brew install 'rbenv'
+brew install 'ruby-build'
+brew install 'tree'
+brew install 'watch'
+brew install 'openssl'
+brew install 'mas'
+brew install 'gnu-sed --with-default-names'
+brew install 'wget --with-iri'
 
 # More recent versions
-brew_install_or_upgrade 'coreutils'
-brew_install_or_upgrade 'findutils'
-brew_install_or_upgrade 'bash'
-brew_install_or_upgrade 'gnu-tar'
+brew install 'coreutils'
+brew install 'findutils'
+brew install 'bash'
+brew install 'gnu-tar'
 
 append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' 1
 
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
-
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
-
-brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+fancy_echo "Configuring Ruby ..."
+find_latest_ruby() {
+  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
+}
 
-eval "$(rbenv init - zsh)"
+ruby_version="$(find_latest_ruby)"
+# shellcheck disable=SC2016
+append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
+eval "$(rbenv init -)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
+  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
 fi
 
 rbenv global "$ruby_version"
 rbenv shell "$ruby_version"
+
+#-----------------------------------------
+fancy_echo "Updating dupes ..."
+
+brew tap 'homebrew/dupes'
+brew install 'grep'
+brew install 'rsync'
+
+fancy_echo "Updating cask apps ..."
+
+brew tap 'caskroom/cask'
+brew install 'brew-cask'
+
+# Apps
+brew cask install 1password
+brew cask install alfred
+brew cask install carbon-copy-cloner
+brew cask install cleanmymac
+brew cask install dropbox
+brew cask install evernote
+brew cask install flash
+brew cask install firefox
+brew cask install hyper
+brew cask install java
+brew cask install google-chrome
+brew cask install imageoptim
+brew cask install istat-menus
+brew cask install kaleidoscope
+brew cask install macdown
+brew cask install mamp
+brew cask install sizeup
+brew cask install skype
+brew cask install slack
+brew cask install sourcetree
+brew cask install sublime-text
+brew cask install the-unarchiver
+brew cask install tower
+brew cask install transmit
+brew cask install vagrant
+brew cask install virtualbox
+
+fancy_echo "Updating Quicklook plugins ..."
+# Quicklook plugins
+# https://github.com/sindresorhus/quick-look-plugins
+brew cask install qlcolorcode
+brew cask install qlstephen
+brew cask install qlmarkdown
+brew cask install quicklook-json
+brew cask install qlprettypatch
+brew cask install quicklook-csv
+brew cask install betterzipql
+brew cask install qlimagesize
+brew cask install webpquicklook
+brew cask install suspicious-package
+
+fancy_echo "Installing fonts ..."
+
+brew tap 'caskroom/fonts'
+
+# Fonts
+brew cask install font-droid-sans-mono
+brew cask install font-open-sans
+brew cask install font-raleway
+brew cask install font-roboto
+brew cask install font-source-code-pro
+
+fancy_echo "Node packages ..."
+
+# Node packages
+npm install -g gulp
+npm install -g grunt-cli
+npm install -g bower
+npm install -g pure-prompt
+
+fancy_echo "Updating gems ..."
 
 gem update --system
 
 gem_install_or_update 'bundler'
 
 fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
 
-  #-----------------------------------------
-  fancy_echo "Updating dupes ..."
+# Gems
+gem_install_or_update 'sass'
+gem_install_or_update 'bourbon'
+gem_install_or_update 'neat'
 
-  brew_tap 'homebrew/dupes'
-  brew_install_or_upgrade 'grep'
-  brew_install_or_upgrade 'rsync'
-
-  fancy_echo "Updating cask apps ..."
-
-  brew_tap 'caskroom/cask'
-  brew_install_or_upgrade 'brew-cask'
-
-  # Apps
-  brew cask install 1password
-  brew cask install alfred
-  brew cask install backblaze
-  brew cask install bartender
-  brew cask install carbon-copy-cloner
-  brew cask install cleanmymac
-  brew cask install codekit
-  brew cask install dropbox
-  brew cask install evernote
-  brew cask install flash
-  brew cask install google-chrome
-  brew cask install imageoptim
-  brew cask install istat-menus
-  brew cask install kaleidoscope
-  brew cask install macdown
-  brew cask install mamp
-  brew cask install sizeup
-  brew cask install skype
-  brew cask install slack
-  brew cask install sourcetree
-  brew cask install spotify
-  brew cask install textexpander
-  brew cask install the-unarchiver
-  brew cask install tower
-  brew cask install transmit
-  brew cask install vagrant
-  brew cask install virtualbox
-  brew cask install xtrafinder
-
-  fancy_echo "Updating Quicklook plugins ..."
-  # Quicklook plugins
-  # https://github.com/sindresorhus/quick-look-plugins
-  brew cask install qlcolorcode
-  brew cask install qlstephen
-  brew cask install qlmarkdown
-  brew cask install quicklook-json
-  brew cask install qlprettypatch
-  brew cask install quicklook-csv
-  brew cask install betterzipql
-  brew cask install qlimagesize
-  brew cask install webpquicklook
-  brew cask install suspicious-package
-
-  fancy_echo "Installing versioned apps ..."
-
-  brew_tap 'caskroom/versions'
-
-  # Versioned apps
-  brew cask install sublime-text3
-
-  fancy_echo "Installing fonts ..."
-
-  brew_tap 'caskroom/fonts'
-
-  # Fonts
-  brew cask install font-droid-sans-mono
-  brew cask install font-open-sans
-  brew cask install font-raleway
-  brew cask install font-roboto
-  brew cask install font-source-code-pro
-
-  fancy_echo "Node packages ..."
-
-  # Node packages
-  npm install -g gulp
-  npm install -g grunt-cli
-  npm install -g bower
-  npm install -g pure-prompt
-
-  fancy_echo "Updating gems ..."
-
-  # Gems
-  gem_install_or_update 'sass'
-  gem_install_or_update 'bourbon'
-  gem_install_or_update 'neat'
-
-  rbenv rehash
+rbenv rehash
 
 fancy_echo "Remember to setup ssh yo, https://help.github.com/articles/generating-ssh-keys/"

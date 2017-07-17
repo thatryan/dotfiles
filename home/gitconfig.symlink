@@ -1,50 +1,78 @@
 [alias]
 
-    c = commit -am
-    s  = status
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-    df = diff --color --color-words --abbrev
-    # Show the diff between the latest commit and the current state
-    d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	c = commit -am
+	# View abbreviated SHA, description, and history graph of the latest 20 commits
+	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+
+	# View the current working tree status using the short format
+	s = status -s
+
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+	# Switch to a branch, creating it if necessary
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
+	# List aliases
+	aliases = config --get-regexp alias
+
+	# Amend the currently staged files to the latest commit
+	amend = commit --amend --reuse-message=HEAD
+
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore
+
+[color]
+
+	# Use colors in Git commands that are capable of colored output when
+	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+	ui = auto
+
+[color "branch"]
+
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+
+	meta = yellow bold
+	frag = magenta bold # line info
+	old = red # deletions
+	new = green # additions
+
+[color "status"]
+
+	added = yellow
+	changed = green
+	untracked = cyan
 
 [push]
   default = current
 
-  [color]
-    ui = always
+  # URL shorthands
 
-[color "branch"]
-    current = green bold
-    local = green
-    remote = yellow
+  [url "git@github.com:"]
 
-[color "diff"]
-    frag = magenta
-    meta = yellow
-    new = green
-    old = red
+  	insteadOf = "gh:"
+  	pushInsteadOf = "github:"
+  	pushInsteadOf = "git://github.com/"
 
-[color "status"]
-    added = green reverse
-    changed = yellow reverse
-    untracked = red reverse
+  [url "git://github.com/"]
 
-[core]
-    autocrlf = input
-    excludesfile = ~/.gitignore
+  	insteadOf = "github:"
 
-[url "git@github.com:"]
-    insteadOf = "gh:"
-    insteadOf = "git://github.com"
-    pushInsteadOf = "github:"
-    pushInsteadOf = "git://github.com/"
-    pushInsteadOf = "https://github.com/"
+  [url "git@gist.github.com:"]
 
-[url "git@gist.github.com:"]
-    insteadOf = "gst:"
-    pushInsteadOf = "gist:"
-    pushInsteadOf = "git://gist.github.com/"
-    pushInsteadOf = "https://gist.github.com/"
+  	insteadOf = "gst:"
+  	pushInsteadOf = "gist:"
+  	pushInsteadOf = "git://gist.github.com/"
 
 [include]
   path = ~/.gitconfig.local

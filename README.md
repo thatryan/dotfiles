@@ -10,6 +10,7 @@ This has only been tested on OS X 10.10+ and these are very much in flux, mostly
 Run this, need command line tools for git and stuffs.
 
 ```bash
+$ sudo softwareupdate -i -a
 $ xcode-select --install
 ```
 
@@ -41,6 +42,11 @@ ln -s ~/Dropbox/local-dotfiles/.gitconfig.local ~/.gitconfig.local
 ln -s ~/Dropbox/local-dotfiles/.aliases.local ~/.aliases.local
 ```
 
+Get app from mac app store using [mas](https://github.com/mas-cli/mas)
+
+```bash
+source ~/Dropbox/local-dotfiles/mas.sh
+```
 ## Features
 * The [pure prompt](https://github.com/sindresorhus/pure)
 * Awesome [z](https://github.com/rupa/z) directory jumping
@@ -52,7 +58,6 @@ My editor of choice so a special section for getting it set back up lives [**her
 
 ## Known Issues
 
-* Need to find a way to auto start Alfred
 * Column View as default finder window not working right
 * Want to add options for customizing finder sidebar items
 * Need to adjust trackpad and key repeats, way too fast but I don't know what options there are :)
@@ -75,18 +80,10 @@ The update process will do basically the same things as setup, but instead of do
 
 ####TODO:
 
-* Add something to track what cannot be automated for new machine setup similar to [Kevin Elliott's gist](https://gist.github.com/kevinelliott/0726211d17020a6abc1f)
+* Add something to track what cannot be automated for new machine setup similar to [Kevin Elliott's gist](https://gist.github.com/kevinelliott/7a152c556a83b322e0a8cd2df128235c)
 
 ## Migration Reminders
 
-#### Need Manual Installation
-
-These are the current apps that cannot be added via casks yet, or because I purchased via app store.
-
-* [Annotate](https://www.driftt.com/annotate-mac)
-* [SEO Spider](http://www.screamingfrog.co.uk/seo-spider)
-* [Adobe Stuffs](https://www.adobe.com)
-* [Tweetbot](http://tapbots.com/tweetbot/mac)
 
 #### See if I want need to keep or add/remove apps
 

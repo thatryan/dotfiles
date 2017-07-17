@@ -1,7 +1,7 @@
 # Editors
 
-export EDITOR='subl -w'
-export VISUAL='subl -w'
+export EDITOR='subl'
+export VISUAL='subl'
 export PAGER='less'
 
 # Less

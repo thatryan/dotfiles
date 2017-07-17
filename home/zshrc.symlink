@@ -6,7 +6,6 @@ source ~/dotfiles/submodules/z/z.sh
 source ~/dotfiles/submodules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Setup prompt
-fpath+=("/usr/local/share/zsh/site-functions")
 autoload -U promptinit && promptinit
 prompt pure
 
@@ -38,6 +37,7 @@ path=(
 export NODE_PATH='/usr/local/lib/node_modules'
 
 export PATH="$HOME/.bin:$PATH"
+export PATH="/usr/local/opt/node@6/bin:$PATH"
 
 # recommended by brew doctor
 export PATH="/usr/local/bin:$PATH"

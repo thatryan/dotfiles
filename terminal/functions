@@ -16,145 +16,12 @@ function manp {
   fi
 }
 
-# Show current Finder directory.
-function finder {
-  osascript 2>/dev/null <<EOF
-    tell application "Finder"
-      return POSIX path of (target of window 1 as alias)
-    end tell
-EOF
-}
-
-# Gets password from OS X Keychain.
-# $ get-pass github
-function get-pass() {
-  keychain="$HOME/Library/Keychains/login.keychain"
-  security -q find-generic-password -g -l $@ $keychain 2>&1 |\
-    awk -F\" '/password:/ {print $2}';
-}
-
-# Opens file in EDITOR.
-function edit() {
-  local dir=$1
-  [[ -z "$dir" ]] && dir='.'
-  $EDITOR $dir
-}
-alias e=edit
-
-# Execute commands for each file in current directory.
-function each() {
-  for dir in *; do
-    # echo "${dir}:"
-    cd $dir
-    $@
-    cd ..
-  done
-}
-
-# Better find(1)
-function ff() {
-  find . -iname "*${1:-}*"
-}
-
-# Show how much RAM application uses.
-# $ ram safari
-# # => safari uses 154.69 MBs of RAM.
-function ram() {
-  local sum
-  local items
-  local app="$1"
-  if [ -z "$app" ]; then
-    echo "First argument - pattern to grep from processes"
-  else
-    sum=0
-    for i in `ps aux | grep -i "$app" | grep -v "grep" | awk '{print $6}'`; do
-      sum=$(($i + $sum))
-    done
-    sum=$(echo "scale=2; $sum / 1024.0" | bc)
-    if [[ $sum != "0" ]]; then
-      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
-    else
-      echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
-    fi
-  fi
-}
-
 # Shortcut for searching commands history.
 # hist git
 function hist() {
   history 0 | grep $@
 }
 
-# $ aes-enc file.zip
-function aes-enc() {
-  openssl enc -aes-256-cbc -e -in $1 -out "$1.aes"
-}
-
-# $ aes-dec file.zip.aes
-function aes-dec() {
-  openssl enc -aes-256-cbc -d -in $1 -out "${1%.*}"
-}
-
-# Converts a.mkv to a.m4v.
-function mkv2mp4() {
-  for file in "$@"; do
-    ffmpeg -i $file -map 0 -c copy "${file%.*}.m4v"
-  done
-}
-
-function mkv2mp4_c() {
-  for file in "$@"; do
-    ffmpeg -i $file -map 0:0 -map 0:2 -map 0:4 -c copy -c:s mov_text "${file%.*}.m4v"
-  done
-}
-
-# Adds subs from a.srt to a.m4v.
-function addsubs() {
-  for file in "$@"; do
-    local raw="${file%.*}"
-    local old="$raw.m4v"
-    local new="$raw-sub.m4v"
-    ffmpeg -i $old -i $file -map 0 -map 1 -c copy -c:s mov_text $new
-    mv $new $old
-    rm $file
-  done
-}
-
-# Shortens GitHub URLs. By Sorin Ionescu <sorin.ionescu@gmail.com>
-function gitio() {
-  local url="$1"
-  local code="$2"
-
-  [[ -z "$url" ]] && print "usage: $0 url code" >&2 && exit
-  [[ -z "$code" ]] && print "usage: $0 url code" >&2 && exit
-
-  curl -s -i 'http://git.io' -F "url=$url" -F "code=$code"
-}
-
-# Monitor IO in real-time (open files etc).
-function openfiles() {
-  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
-}
-
-# $ retry ping google.com
-function retry() {
-  echo Retrying "$@"
-  $@
-  sleep 1
-  retry $@
-}
-
-# Open curr dir in preview.app.
-function preview() {
-  local item=$1
-  [[ -z "$item" ]] && item='.'
-  open $1 -a 'Preview'
-}
-
-# Copy w/ progress
-cp_p () {
-  rsync -WavP --human-readable --progress $1 $2
-}
 
 # whois a domain or a URL
 function whois() {
@@ -170,28 +37,10 @@ function whois() {
   /usr/bin/whois -h whois.internic.net $domain | sed '/NOTICE:/q'
 }
 
-# animated gifs from any video
-# from alex sexton   gist.github.com/SlexAxton/4989674
-gifify() {
-  if [[ -n "$1" ]]; then
-    if [[ $2 == '--good' ]]; then
-      ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
-      time convert -verbose +dither -layers Optimize -resize 900x900\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
-      rm out-static*.png
-    else
-      ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
-    fi
-  else
-    echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
-  fi
-}
-
-# turn that video into webm.
-webmify(){
-  ffmpeg -i $1 -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y $2 $1.webm
-}
-
-
-mov-to-gif() {
-  ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=0 --delay=7 #
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
