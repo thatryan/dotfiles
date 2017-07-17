@@ -48,7 +48,9 @@ Get app from mac app store using [mas](https://github.com/mas-cli/mas)
 source ~/Dropbox/local-dotfiles/mas.sh
 ```
 ## Features
+* [Hyper](https://hyper.is/) terminal
 * The [pure prompt](https://github.com/sindresorhus/pure)
+* [Hyper Snazzy!](https://github.com/sindresorhus/hyper-snazzy)
 * Awesome [z](https://github.com/rupa/z) directory jumping
 * Sweet [syntax highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
@@ -74,6 +76,11 @@ If you decide to fork this project, be sure you substitute my name and info with
 * Add something to track what cannot be automated for new machine setup similar to [Kevin Elliott's gist](https://gist.github.com/kevinelliott/7a152c556a83b322e0a8cd2df128235c)
 
 ## Migration Reminders
+
+* After all the setup, move SSH keys back in
+
+######
+More hyper stuff :) https://justinzimmerman.net/post/switching-from-iterm-to-hyperterm/
 
 
 #### See if I want need to keep or add/remove apps
