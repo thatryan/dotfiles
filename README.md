@@ -78,9 +78,8 @@ If you decide to fork this project, be sure you substitute my name and info with
 ## Migration Reminders
 
 * After all the setup, move SSH keys back in
-
-######
-More hyper stuff :) https://justinzimmerman.net/post/switching-from-iterm-to-hyperterm/
+* Setup [vvv](https://varyingvagrantvagrants.org/docs/en-US/installation/)
+* More [hyper](https://justinzimmerman.net/post/switching-from-iterm-to-hyperterm/) stuff
 
 
 #### See if I want need to keep or add/remove apps
