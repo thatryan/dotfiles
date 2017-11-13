@@ -201,7 +201,6 @@ brew cask install hyper
 brew cask install java
 brew cask install google-chrome
 brew cask install imageoptim
-brew cask install istat-menus
 brew cask install kaleidoscope
 brew cask install macdown
 brew cask install sequel-pro
@@ -229,6 +228,9 @@ brew cask install betterzipql
 brew cask install qlimagesize
 brew cask install webpquicklook
 brew cask install suspicious-package
+brew cask install quicklookase
+brew cask install qlvideo
+
 
 fancy_echo "Installing fonts ..."
 
@@ -245,7 +247,6 @@ fancy_echo "Node packages ..."
 
 # Node packages
 npm install -g gulp
-npm install -g grunt-cli
 npm install -g bower
 npm install -g pure-prompt
 
@@ -261,8 +262,6 @@ bundle config --global jobs $((number_of_cores - 1))
 
 # Gems
 gem_install_or_update 'sass'
-gem_install_or_update 'bourbon'
-gem_install_or_update 'neat'
 
 rbenv rehash
 

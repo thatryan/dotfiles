@@ -44,6 +44,10 @@ ln -s ~/Dropbox/local-dotfiles/.aliases.local ~/.aliases.local
 
 Get app from mac app store using [mas](https://github.com/mas-cli/mas)
 
+409203825
+409201541
+557168941
+
 ```bash
 source ~/Dropbox/local-dotfiles/mas.sh
 ```
