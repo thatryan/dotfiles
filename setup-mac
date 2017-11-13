@@ -203,6 +203,7 @@ brew cask install google-chrome
 brew cask install imageoptim
 brew cask install kaleidoscope
 brew cask install macdown
+brew cask install plistedit-pro
 brew cask install sequel-pro
 brew cask install sizeup
 brew cask install skype
