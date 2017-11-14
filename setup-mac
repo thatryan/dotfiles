@@ -266,4 +266,10 @@ gem_install_or_update 'sass'
 
 rbenv rehash
 
+mas signin ryan@thatryan.com
+
+mas install 409203825
+mas install 409201541
+mas install 557168941
+
 fancy_echo "Remember to setup ssh yo, https://help.github.com/articles/generating-ssh-keys/"
