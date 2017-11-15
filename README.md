@@ -58,12 +58,6 @@ source ~/Dropbox/local-dotfiles/mas.sh
 
 My editor of choice so a special section for getting it set back up lives [**here**](sublime) until I can find how to automate it.
 
-## Known Issues
-
-* Column View as default finder window not working right
-* Want to add options for customizing finder sidebar items
-* Need to adjust trackpad and key repeats, way too fast but I don't know what options there are :)
-
 ## Bugs & Forks
 
 Hey, there may be bugs in here. If you play around with this and find something or a way to do stuff better be sure to [let me know](https://github.com/thatryan/dotfiles/issues)! Also, be sure you read some of the scripts before blindly executing; always a good idea to have some idea of what all is going on. If you run this and your computer catches fire, don't blame me :see_no_evil:
