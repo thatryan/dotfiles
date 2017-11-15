@@ -5,12 +5,6 @@
 
 DOTFILES_ROOT="$HOME/dotfiles"
 
-fancy_echo() {
-  local fmt="$1"; shift
-
-  printf "\n$fmt\n" "$@"
-}
-
 link_file () {
   local src=$1 dst=$2
   rm -rf "$dst"
@@ -18,14 +12,11 @@ link_file () {
   fancy_echo "linked" "$1" "to" $"2"
 }
 
-fancy_echo "Creating symlinks ..."
+fancy_echo() {
+  local fmt="$1"; shift
 
-for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
-do
-  dst="$HOME/.$(basename "${src%.*}")"
-  link_file "$src" "$dst"
-done
-
+  printf "\n$fmt\n" "$@"
+}
 
 append_to_zshrc() {
   local text="$1" zshrc
@@ -45,6 +36,14 @@ append_to_zshrc() {
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
+
+fancy_echo "Creating symlinks ..."
+
+for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
+do
+  dst="$HOME/.$(basename "${src%.*}")"
+  link_file "$src" "$dst"
+done
 
 fancy_echo "Creating directories ..."
 
@@ -103,12 +102,9 @@ esac
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
-    fancy_echo "Updating %s ..." "$1"
     gem update "$@"
   else
-    fancy_echo "Installing %s ..." "$1"
     gem install "$@"
-    rbenv rehash
   fi
 }
 
@@ -134,115 +130,121 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 
 fancy_echo "Installing Homebrew formulas ..."
-brew install 'zsh'
-brew install 'git'
-brew install 'the_silver_searcher'
-brew install 'vim --with-override-system-vi'
-brew install 'imagemagick'
-brew install 'node'
-brew install 'rbenv'
-brew install 'ruby-build'
-brew install 'tree'
-brew install 'watch'
-brew install 'openssl'
-brew install 'mas'
-brew install 'gnu-sed --with-default-names'
-brew install 'wget --with-iri'
+brew "zsh"
+brew "git"
+brew "the_silver_searcher"
+brew "vim", args: ["with-override-system-vi"]
+brew "imagemagick"
+brew "tree"
+brew "watch"
+brew "openssl"
+brew "mas"
+brew "gnu-sed", args: ["with-default-names"]
+brew "wget"
+brew "thefuck"
 
 # More recent versions
-brew install 'coreutils'
-brew install 'findutils'
-brew install 'bash'
-brew install 'gnu-tar'
+brew "coreutils"
+brew "findutils"
+brew "bash"
+brew "gnu-tar"
+
+# dupes
+brew "grep"
+brew "rsync"
+
+# Apps
+cask "1password"
+cask "alfred"
+cask "carbon-copy-cloner"
+cask "cleanmymac"
+cask "dropbox"
+cask "evernote"
+cask "flash"
+cask "firefox"
+cask "hyper"
+scask "google-chrome"
+cask "imageoptim"
+cask "kaleidoscope"
+cask "macdown"
+cask "plistedit-pro"
+cask "sequel-pro"
+cask "sizeup"
+cask "skype"
+cask "slack"
+cask "sourcetree"
+cask "sublime-text"
+cask "the-unarchiver"
+cask "tower"
+cask "transmit"
+cask "vagrant"
+cask "virtualbox"
+
+# Quicklook plugins
+# https://github.com/sindresorhus/quick-look-plugins
+cask "qlcolorcode"
+cask "qlstephen"
+cask "qlmarkdown"
+cask "quicklook-json"
+cask "qlprettypatch"
+cask "quicklook-csv"
+cask "betterzipql"
+cask "qlimagesize"
+cask "webpquicklook"
+cask "suspicious-package"
+cask "quicklookase"
+cask "qlvideo"
+
+# Fonts
+cask "font-source-code-pro"
+
+# brew bundle it
+# https://github.com/Homebrew/homebrew-bundle
+brew bundle
 
 append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' 1
 
-brew unlink openssl && brew link openssl --force
-
-fancy_echo "Configuring Ruby ..."
-find_latest_ruby() {
-  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
-}
-
-ruby_version="$(find_latest_ruby)"
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
-eval "$(rbenv init -)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
+fancy_echo "Configuring asdf version manager..."
+if [ ! -d "$HOME/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.3.0
+  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
 fi
 
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
+install_asdf_plugin() {
+  local name="$1"
+  local url="$2"
 
-#-----------------------------------------
-fancy_echo "Updating dupes ..."
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  fi
+}
 
-brew tap 'homebrew/dupes'
-brew install 'grep'
-brew install 'rsync'
+# shellcheck disable=SC1090
+source "$HOME/.asdf/asdf.sh"
+install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
-fancy_echo "Updating cask apps ..."
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | tail -1)"
 
-brew tap 'caskroom/cask'
-brew install 'brew-cask'
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
+}
 
-# Apps
-brew cask install 1password
-brew cask install alfred
-brew cask install carbon-copy-cloner
-brew cask install cleanmymac
-brew cask install dropbox
-brew cask install evernote
-brew cask install flash
-brew cask install firefox
-brew cask install hyper
-brew cask install java
-brew cask install google-chrome
-brew cask install imageoptim
-brew cask install kaleidoscope
-brew cask install macdown
-brew cask install plistedit-pro
-brew cask install sequel-pro
-brew cask install sizeup
-brew cask install skype
-brew cask install slack
-brew cask install sourcetree
-brew cask install sublime-text
-brew cask install the-unarchiver
-brew cask install tower
-brew cask install transmit
-brew cask install vagrant
-brew cask install virtualbox
+fancy_echo "Installing latest Ruby..."
+install_asdf_language "ruby"
+gem update --system
+gem_install_or_update "bundler"
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Updating Quicklook plugins ..."
-# Quicklook plugins
-# https://github.com/sindresorhus/quick-look-plugins
-brew cask install qlcolorcode
-brew cask install qlstephen
-brew cask install qlmarkdown
-brew cask install quicklook-json
-brew cask install qlprettypatch
-brew cask install quicklook-csv
-brew cask install betterzipql
-brew cask install qlimagesize
-brew cask install webpquicklook
-brew cask install suspicious-package
-brew cask install quicklookase
-brew cask install qlvideo
-
-
-fancy_echo "Installing fonts ..."
-
-brew tap 'caskroom/fonts'
-
-# Fonts
-brew cask install font-droid-sans-mono
-brew cask install font-open-sans
-brew cask install font-raleway
-brew cask install font-roboto
-brew cask install font-source-code-pro
+fancy_echo "Installing latest Node..."
+bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
+install_asdf_language "nodejs"
 
 fancy_echo "Node packages ..."
 
@@ -251,25 +253,7 @@ npm install -g gulp
 npm install -g bower
 npm install -g pure-prompt
 
-fancy_echo "Updating gems ..."
-
-gem update --system
-
-gem_install_or_update 'bundler'
-
-fancy_echo "Configuring Bundler ..."
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
+fancy_echo "Installing gems ..."
 
 # Gems
 gem_install_or_update 'sass'
-
-rbenv rehash
-
-mas signin ryan@thatryan.com
-
-mas install 409203825
-mas install 409201541
-mas install 557168941
-
-fancy_echo "Remember to setup ssh yo, https://help.github.com/articles/generating-ssh-keys/"
