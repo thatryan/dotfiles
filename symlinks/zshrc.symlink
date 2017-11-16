@@ -39,8 +39,3 @@ export NODE_PATH='/usr/local/lib/node_modules'
 export PATH="$HOME/.bin:$PATH"
 export PATH="/usr/local/opt/node@6/bin:$PATH"
 
-# recommended by brew doctor
-export PATH="/usr/local/bin:$PATH"
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-eval "$(rbenv init - --no-rehash zsh)"
-eval "$(rbenv init - --no-rehash)"

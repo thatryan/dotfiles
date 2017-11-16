@@ -9,7 +9,8 @@ link_file () {
   local src=$1 dst=$2
   rm -rf "$dst"
   ln -s "$1" "$2"
-  fancy_echo "linked" "$1" "to" $"2"
+    fancy_echo "Linked '$2' to '$1' yay"
+
 }
 
 fancy_echo() {
@@ -130,11 +131,17 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 
 fancy_echo "Installing Homebrew formulas ..."
+
+brew bundle --file=- <<EOF
+tap "caskroom/fonts"
 brew "zsh"
 brew "git"
 brew "the_silver_searcher"
 brew "vim", args: ["with-override-system-vi"]
 brew "imagemagick"
+brew "node"
+brew "rbenv"
+brew "ruby-build"
 brew "tree"
 brew "watch"
 brew "openssl"
@@ -160,11 +167,12 @@ cask "carbon-copy-cloner"
 cask "cleanmymac"
 cask "dropbox"
 cask "evernote"
-cask "flash"
+cask "flash-player"
 cask "firefox"
 cask "hyper"
-scask "google-chrome"
+cask "google-chrome"
 cask "imageoptim"
+cask "java"
 cask "kaleidoscope"
 cask "macdown"
 cask "plistedit-pro"
@@ -178,10 +186,11 @@ cask "the-unarchiver"
 cask "tower"
 cask "transmit"
 cask "vagrant"
-cask "virtualbox"
+#cask "virtualbox"
 
 # Quicklook plugins
 # https://github.com/sindresorhus/quick-look-plugins
+
 cask "qlcolorcode"
 cask "qlstephen"
 cask "qlmarkdown"
@@ -200,51 +209,26 @@ cask "font-source-code-pro"
 
 # brew bundle it
 # https://github.com/Homebrew/homebrew-bundle
-brew bundle
+EOF
 
 append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' 1
 
-fancy_echo "Configuring asdf version manager..."
-if [ ! -d "$HOME/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.3.0
-  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+fancy_echo "Configuring Ruby ..."
+find_latest_ruby() {
+  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
+}
+
+ruby_version="$(find_latest_ruby)"
+# shellcheck disable=SC2016
+append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
+eval "$(rbenv init -)"
+
+if ! rbenv versions | grep -Fq "$ruby_version"; then
+  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
 fi
 
-install_asdf_plugin() {
-  local name="$1"
-  local url="$2"
-
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  fi
-}
-
-# shellcheck disable=SC1090
-source "$HOME/.asdf/asdf.sh"
-install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
-
-install_asdf_language() {
-  local language="$1"
-  local version
-  version="$(asdf list-all "$language" | tail -1)"
-
-  if ! asdf list "$language" | grep -Fq "$version"; then
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-  fi
-}
-
-fancy_echo "Installing latest Ruby..."
-install_asdf_language "ruby"
-gem update --system
-gem_install_or_update "bundler"
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing latest Node..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
+rbenv global "$ruby_version"
+rbenv shell "$ruby_version"
 
 fancy_echo "Node packages ..."
 
@@ -253,7 +237,11 @@ npm install -g gulp
 npm install -g bower
 npm install -g pure-prompt
 
-fancy_echo "Installing gems ..."
+fancy_echo "Updating gems ..."
 
-# Gems
-gem_install_or_update 'sass'
+gem update --system
+
+gem install 'bundler'
+gem install 'sass'
+
+rbenv rehash
