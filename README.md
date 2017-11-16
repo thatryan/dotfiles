@@ -47,6 +47,7 @@ Then run
 $ ./setup.py
 ```
 After, if you wish to setup OS X preferences run,
+##### Note* open chrome first, so its settings in setup will be applied.
 
 ```bash
 $ ./setup-prefs
