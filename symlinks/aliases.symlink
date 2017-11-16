@@ -54,4 +54,4 @@ alias flush="dscacheutil -flushcache"
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 
-eval $(thefuck --alias)
+eval $(thefuck --alias fuck)

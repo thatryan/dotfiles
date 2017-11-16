@@ -2,7 +2,7 @@
 
 ### Note
 
-This has only been tested on OS X 10.10+ and these are very much in flux, mostly notes to myself here so I would not run this unless you know what you are doing until I finalize it all :)
+This has only been tested on OS X 10.10 - 10.13 and these are very much in flux, mostly notes to myself here so I would not run this unless you know what you are doing until I finalize it all :)
 
 ## Setup
 
@@ -24,6 +24,13 @@ Once cloned, run it. This will do lots, create some directories, setup symlinks 
 
 ```bash
 $ sh setup-mac 2>&1 | tee ~/setup-mac.log
+```
+
+Install virtualbox by allowing it in privacy, blah.
+[more info](https://github.com/caskroom/homebrew-cask/issues/39369#issuecomment-334744335)
+
+```bash
+$ brew cask install virtualbox
 ```
 
 After, if you wish to setup OS X preferences run,
@@ -82,19 +89,6 @@ If you decide to fork this project, be sure you substitute my name and info with
 * read `npm list -g --depth=0` to see global npm packages
 * read `gem list` to see current gem files
 
-#### Apps to re-link to their cloud prefs.
-
-* 1Password
-* Dropbox
-* Transmit
-
-#### Other app settings
-
-Automate somehow...?
-
-* Sublime
-* Tweetbot
-* iStat menus
 
 ## Acknowledgements
 

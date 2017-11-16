@@ -186,7 +186,6 @@ cask "the-unarchiver"
 cask "tower"
 cask "transmit"
 cask "vagrant"
-#cask "virtualbox"
 
 # Quicklook plugins
 # https://github.com/sindresorhus/quick-look-plugins
