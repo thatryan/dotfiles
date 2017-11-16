@@ -33,6 +33,19 @@ Install virtualbox by allowing it in privacy, blah.
 $ brew cask install virtualbox
 ```
 
+## Sublime
+
+Setup Sublime Text 3 and packages/settings
+
+```bash
+$ git clone https://github.com/thatryan/sublime-text-bootstrap
+```
+
+Then run
+
+```bash
+$ ./setup.py
+```
 After, if you wish to setup OS X preferences run,
 
 ```bash
@@ -61,26 +74,15 @@ source ~/Dropbox/local-dotfiles/mas.sh
 * Awesome [z](https://github.com/rupa/z) directory jumping
 * Sweet [syntax highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
-## Sublime Text
-
-My editor of choice so a special section for getting it set back up lives [**here**](sublime) until I can find how to automate it.
-
 ## Bugs & Forks
 
 Hey, there may be bugs in here. If you play around with this and find something or a way to do stuff better be sure to [let me know](https://github.com/thatryan/dotfiles/issues)! Also, be sure you read some of the scripts before blindly executing; always a good idea to have some idea of what all is going on. If you run this and your computer catches fire, don't blame me :see_no_evil:
-
-If you decide to fork this project, be sure you substitute my name and info with yours in the initial setup clone and in the gitconfig.
-
-
-####TODO:
-
-* Add something to track what cannot be automated for new machine setup similar to [Kevin Elliott's gist](https://gist.github.com/kevinelliott/7a152c556a83b322e0a8cd2df128235c)
 
 ## Migration Reminders
 
 * After all the setup, move SSH keys back in
 * Setup [vvv](https://varyingvagrantvagrants.org/docs/en-US/installation/)
-* More [hyper](https://justinzimmerman.net/post/switching-from-iterm-to-hyperterm/) stuff
+* More [hyper](https://github.com/bnb/awesome-hyper) stuff
 
 
 #### See if I want need to keep or add/remove apps
@@ -88,21 +90,3 @@ If you decide to fork this project, be sure you substitute my name and info with
 * read `brew list` and `brew cask list` to see whats worth reinstalling
 * read `npm list -g --depth=0` to see global npm packages
 * read `gem list` to see current gem files
-
-
-## Acknowledgements
-
-Inspiration and code was taken from many sources, including:
-
-* [Cătălin’s dotfiles](https://github.com/alrra/dotfiles)
-* [Paul Millr's dotfiles](https://github.com/paulmillr/dotfiles)
-* [Paul Irish's dotfiles](https://github.com/paulirish/dotfiles)
-* [Mathias Bynens' dotfiles](https://github.com/mathiasbynens/dotfiles)
-* [Nicolas Gallagher's dotfiles](https://github.com/necolas/dotfiles)
-* [Hannes's osx script](https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh)
-* [thoughtbot's laptop](https://github.com/thoughtbot/laptop)
-
-
-## License
-
-The code is available under the [MIT license](LICENSE.txt).
