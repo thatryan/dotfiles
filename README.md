@@ -33,6 +33,8 @@ Install virtualbox by allowing it in privacy, blah.
 $ brew cask install virtualbox
 ```
 
+Install [Composer](https://getcomposer.org/download/)
+
 ## Sublime
 
 Setup Sublime Text 3 and packages/settings
@@ -46,6 +48,10 @@ Then run
 ```bash
 $ ./setup.py
 ```
+
+#### Linting with Sublime
+Confirm setup and install PHPCS, follow this [epic guide](https://webdevstudios.com/2017/04/06/lint-code-like-boss/)
+
 After, if you wish to setup OS X preferences run,
 ##### Note* open chrome first, so its settings in setup will be applied.
 

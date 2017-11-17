@@ -228,9 +228,17 @@ rbenv shell "$ruby_version"
 fancy_echo "Node packages ..."
 
 # Node packages
-npm install -g gulp
 npm install -g bower
+npm install -g eslint
+npm install -g sass-lint
+npm install -g eslint-config-wordpresss
+npm install -g gulp
+npm install -g gulp-cli
 npm install -g pure-prompt
+
+
+append_to_zshrc 'export PATH="$PATH:/usr/local/bin/eslint"'
+append_to_zshrc 'export PATH="$PATH:/usr/local/bin/sass-lint"'
 
 fancy_echo "Updating gems ..."
 
