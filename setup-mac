@@ -229,6 +229,7 @@ fancy_echo "Node packages ..."
 
 # Node packages
 npm install -g bower
+npm install -g csslint
 npm install -g eslint
 npm install -g sass-lint
 npm install -g eslint-config-wordpresss
