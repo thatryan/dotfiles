@@ -33,9 +33,3 @@ path=(
   /{bin,sbin}
   $path
 )
-
-export NODE_PATH='/usr/local/lib/node_modules'
-
-export PATH="$HOME/.bin:$PATH"
-export PATH="/usr/local/opt/node@6/bin:$PATH"
-

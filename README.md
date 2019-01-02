@@ -66,7 +66,6 @@ I keep private infos in local files in Dropbox, so once it is setup and linked t
 
 ```bash
 ln -s ~/Dropbox/local-dotfiles/.gitconfig.local ~/.gitconfig.local
-ln -s ~/Dropbox/local-dotfiles/.aliases.local ~/.aliases.local
 ```
 
 Get app from mac app store using [mas](https://github.com/mas-cli/mas)
