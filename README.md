@@ -20,9 +20,6 @@ Once cloned, run it. This will do lots, create some directories, setup symlinks 
 ```bash
 $ sh setup-mac 2>&1 | tee ~/setup-mac.log
 ```
-
-Install [Composer](https://getcomposer.org/download/)
-
 ## Sublime
 
 Setup [Sublime](/sublime) Text 3 and packages/settings

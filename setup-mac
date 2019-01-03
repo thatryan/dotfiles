@@ -165,6 +165,7 @@ brew "libyaml" # should come after openssl
 brew "imagemagick"
 
 # Package managers
+brew "composer"
 brew "yarn", args: ["without-node"]
 
 # Appstore
