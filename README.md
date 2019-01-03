@@ -28,6 +28,9 @@ Setup [Sublime](/sublime) Text 3 and packages/settings
 #### Linting with Sublime
 Confirm setup and install PHPCS, follow this [epic guide](https://webdevstudios.com/2017/04/06/lint-code-like-boss/)
 
+### Font
+Install the awesome [Fira Code](https://github.com/tonsky/FiraCode/) font
+
 After, if you wish to setup OS X preferences run,
 ##### Note* open chrome first, so its settings in setup will be applied.
 
