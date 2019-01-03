@@ -10,7 +10,7 @@ This has only been tested on OS X 10.10 - 10.13 and these are very much in flux,
 Run this, need command line tools for git and stuffs.
 
 ```bash
-$ sudo softwareupdate -i -a
+$ sudo softwareupdate -i -a --restart
 $ xcode-select --install
 ```
 
@@ -26,28 +26,12 @@ Once cloned, run it. This will do lots, create some directories, setup symlinks 
 $ sh setup-mac 2>&1 | tee ~/setup-mac.log
 ```
 
-Install virtualbox by allowing it in privacy, blah.
-[more info](https://github.com/caskroom/homebrew-cask/issues/39369#issuecomment-334744335)
-
-```bash
-$ brew cask install virtualbox
-```
-
 Install [Composer](https://getcomposer.org/download/)
 
 ## Sublime
 
 Setup Sublime Text 3 and packages/settings
 
-```bash
-$ git clone https://github.com/thatryan/sublime-text-bootstrap
-```
-
-Then run
-
-```bash
-$ ./setup.py
-```
 
 #### Linting with Sublime
 Confirm setup and install PHPCS, follow this [epic guide](https://webdevstudios.com/2017/04/06/lint-code-like-boss/)
@@ -86,7 +70,7 @@ Hey, there may be bugs in here. If you play around with this and find something 
 
 ## Migration Reminders
 
-* After all the setup, move SSH keys back in
+* Setup SSH keys [github](https://help.github.com/articles/connecting-to-github-with-ssh/)
 * Setup [vvv](https://varyingvagrantvagrants.org/docs/en-US/installation/)
 * More [hyper](https://github.com/bnb/awesome-hyper) stuff
 
