@@ -49,6 +49,7 @@ SYMLINKS_DIR=$HOME/dotfiles/symlinks
 files=(
 "aliases"
 "gitconfig"
+"gitignore_global"
 "hushlogin"
 "hyper.js"
 "zshenv"
