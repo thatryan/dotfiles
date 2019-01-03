@@ -73,6 +73,9 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
+if [ ! -d "$HOME/github/" ]; then
+  mkdir "$HOME/github"
+fi
 
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
@@ -230,12 +233,12 @@ cask "quicklookase"
 cask "qlvideo"
 EOF
 
-append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' 1
+append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
-  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+  append_to_zshrc "source $HOME/.asdf/asdf.sh"
 fi
 
 install_asdf_plugin() {
