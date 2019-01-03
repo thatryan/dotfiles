@@ -44,12 +44,27 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+SYMLINKS_DIR=$HOME/dotfiles/symlinks
+
+files=(
+"aliases"
+"gitconfig"
+"hushlogin"
+"hyper.js"
+"zshenv"
+"zshrc"
+)
+
 fancy_echo "Creating symlinks ..."
 
-for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
-do
-  dst="$HOME/.$(basename "${src%.*}")"
-  link_file "$src" "$dst"
+for file in "${files[@]}"; do
+  if [ -f "$HOME"/."$file" ]; then
+    fancy_echo ".$file already present. Backing up..."
+    cp "$HOME"/."$file" "$HOME"/."${file}"_backup
+    rm -f "$HOME"/."$file"
+  fi
+  fancy_echo "-> Linking $DOTFILES_DIR/$file to $HOME/.$file..."
+  ln -nfs "$DOTFILES_DIR"/"$file" "$HOME"/."$file"
 done
 
 fancy_echo "Creating directories ..."
