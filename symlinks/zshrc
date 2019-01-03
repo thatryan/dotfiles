@@ -2,8 +2,8 @@
 source ~/.aliases
 source ~/dotfiles/terminal/functions
 source ~/dotfiles/terminal/completion
-source ~/dotfiles/submodules/z/z.sh
-source ~/dotfiles/submodules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/github/z/z.sh
+source ~/github/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Setup prompt
 autoload -U promptinit && promptinit

@@ -81,6 +81,18 @@ fi
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
+fancy_echo "Cloning Z to jump around ..."
+
+git clone git@github.com:rupa/z.git ~/github/z
+
+fancy_echo "Cloned Z!"
+
+fancy_echo "Cloning Zsh Syntax Highlighting ..."
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/github/zsh-syntax-highlighting
+
+fancy_echo "Cloned!"
+
 HOMEBREW_PREFIX="/usr/local"
 
 if [ -d "$HOMEBREW_PREFIX" ]; then
