@@ -30,7 +30,7 @@ Install [Composer](https://getcomposer.org/download/)
 
 ## Sublime
 
-Setup Sublime Text 3 and packages/settings
+Setup [Sublime](/sublime) Text 3 and packages/settings
 
 
 #### Linting with Sublime
