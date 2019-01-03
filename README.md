@@ -1,11 +1,6 @@
 # Ryan’s dotfiles
 
-### Note
-
-This has only been tested on OS X 10.10 - 10.13 and these are very much in flux, mostly notes to myself here so I would not run this unless you know what you are doing until I finalize it all :)
-
 ## Setup
-
 
 Run this, need command line tools for git and stuffs.
 
