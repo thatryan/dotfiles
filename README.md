@@ -52,6 +52,10 @@ I keep private infos in local files in Dropbox, so once it is setup and linked t
 ln -s ~/Dropbox/local-dotfiles/.gitconfig.local ~/.gitconfig.local
 ```
 
+### Mac App Store
+
+> Sign into MAS manually first [bug](https://github.com/mas-cli/mas/issues/164)
+
 Get app from mac app store using [mas](https://github.com/mas-cli/mas)
 
 ```bash
@@ -68,7 +72,8 @@ source ~/Dropbox/local-dotfiles/mas.sh
 
 Hey, there may be bugs in here. If you play around with this and find something or a way to do stuff better be sure to [let me know](https://github.com/thatryan/dotfiles/issues)! Also, be sure you read some of the scripts before blindly executing; always a good idea to have some idea of what all is going on. If you run this and your computer catches fire, don't blame me :see_no_evil:
 
-## Migration Reminders
+## Post Setup Reminders
+
 
 * Setup SSH keys [github](https://help.github.com/articles/connecting-to-github-with-ssh/)
 * Setup [vvv](https://varyingvagrantvagrants.org/docs/en-US/installation/)
@@ -77,6 +82,7 @@ Hey, there may be bugs in here. If you play around with this and find something 
 
 #### See if I want need to keep or add/remove apps
 
+* Copy notes from Bear app and save to dropbox for import
 * read `brew list` and `brew cask list` to see whats worth reinstalling
 * read `npm list -g --depth=0` to see global npm packages
 * read `gem list` to see current gem files
