@@ -53,6 +53,9 @@
 	changed = green
 	untracked = cyan
 
+[credential]
+	helper = osxkeychain
+	
 [push]
   default = current
 
