@@ -6,16 +6,21 @@ Run this, need command line tools for git and stuffs.
 
 ```bash
 $ sudo softwareupdate -i -a --restart
+```
+
+Once all updated,
+
+```bash
 $ xcode-select --install
 ```
 
 To setup clone the repository recursively from your home directory, the setup process will offer you several options along the way.
 
 ```bash
-git clone --recursive git://github.com/thatryan/dotfiles.git
+git clone https://github.com/thatryan/dotfiles.git
 ```
 
-Once cloned, run it. This will do lots, create some directories, setup symlinks install brews/casks/node modules...
+Once cloned, CD in and run it. This will do lots, create some directories, setup symlinks install brews/casks/node modules...
 
 ```bash
 $ sh setup-mac 2>&1 | tee ~/setup-mac.log

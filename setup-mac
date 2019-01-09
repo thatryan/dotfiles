@@ -32,9 +32,9 @@ append_to_zshrc() {
 
   if ! grep -Fqs "$text" "$zshrc"; then
     if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\\n" "$text" >> "$zshrc"
+      printf "%s\\n" "$text" | sudo tee -a "$zshrc"
     else
-      printf "\\n%s\\n" "$text" >> "$zshrc"
+      printf "\\n%s\\n" "$text" | sudo tee -a "$zshrc"
     fi
   fi
 }
@@ -83,7 +83,7 @@ append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
 fancy_echo "Cloning Z to jump around ..."
 
-git clone git@github.com:rupa/z.git ~/github/z
+git clone https://github.com/rupa/z.git ~/github/z
 
 fancy_echo "Cloned Z!"
 
