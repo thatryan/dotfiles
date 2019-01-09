@@ -4,6 +4,8 @@
 # https://github.com/thoughtbot/laptop
 
 DOTFILES_ROOT="$HOME/dotfiles"
+ASDF_NODEJS_VERSION="8.15.0"
+ASDF_RUBY_VERSION="2.6.0"
 
 link_file () {
   local src=$1 dst=$2
@@ -272,17 +274,14 @@ install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
 install_asdf_language() {
   local language="$1"
-  local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+  local version="$2"
 
-  if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
     asdf global "$language" "$version"
-  fi
 }
 
 fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby"
+install_asdf_language "ruby" "$ASDF_RUBY_VERSION"
 gem update --system
 gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
@@ -290,7 +289,7 @@ bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo "Installing latest Node ..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
+install_asdf_language "nodejs" "$ASDF_NODEJS_VERSION"
 
 fancy_echo "Node packages ..."
 
