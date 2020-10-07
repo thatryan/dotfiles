@@ -11,3 +11,6 @@ Thumbs.db
 
 # vscode
 .vscode/*
+
+db.php-e
+wp-site-config.php-e

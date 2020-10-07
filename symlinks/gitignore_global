@@ -54,3 +54,7 @@ desktop.ini
 .idea
 .iml
 *.sublime-workspace
+
+node_modules/
+
+*store.json

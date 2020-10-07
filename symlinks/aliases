@@ -40,5 +40,46 @@ alias dig="dig +nocmd any +multiline +noall +answer"
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache"
 
+alias plugins='cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/plugins'
+alias dealer='cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/themes/DealerInspireDealerTheme'
+alias common='cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/themes/DealerInspireCommonTheme'
+alias dockerup='cd ~/code/dealerinspire/enrollment-core-api && docker-compose up'
+# Vagrant commands
+alias vf='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local'
+alias vup='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local && vagrant up'
+alias vssh='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local && vagrant ssh'
+alias vhalt='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local && vagrant halt'
+
+
+#########################################################
+# Pull all the repos in your code directory at once
+#########################################################
+
+pull_all_repos() {
+    DEV=~/code
+
+    (find $DEV -type d -name .hg | while read line; do cd $line && hg up -C && hg pull -u; done && echo -e "\033[0;32mALL THE REPOSITORIES have been pulled.\033[0m") || (echo -e "\033[0;31mThere was an error!\033[0m")
+
+    $SHELL
+}
+
+collect_input() {
+    prompt="$1"
+    echo -e "\033[0;33m$prompt"
+    echo -e "\033[0;33mYes (y) or No (n)?"
+    echo -en "\033[0m"
+
+    while true; do
+        vared -p "" -c yn
+        case $yn in
+            Y|y ) pull_all_repos;;
+            N|n ) $SHELL;;
+            *   ) echo -e -n "\033[0;31mPlease answer yes (y) or no (n).\033[0m";;
+        esac
+    done
+}
+
+alias pall="collect_input 'Running this script will wipe out any uncommitted changes. Please check your changes first.'"
+
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local

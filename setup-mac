@@ -3,17 +3,7 @@
 # My new Mac setup script, most of it ganked from
 # https://github.com/thoughtbot/laptop
 
-DOTFILES_ROOT="$HOME/dotfiles"
-ASDF_NODEJS_VERSION="8.15.0"
-ASDF_RUBY_VERSION="2.6.0"
-
-link_file () {
-  local src=$1 dst=$2
-  rm -rf "$dst"
-  ln -s "$1" "$2"
-    fancy_echo "Linked '$2' to '$1' yay"
-
-}
+DOTFILES_DIR="$HOME/dotfiles"
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -63,85 +53,11 @@ fancy_echo "Creating symlinks ..."
 for file in "${files[@]}"; do
   if [ -f "$HOME"/."$file" ]; then
     fancy_echo ".$file already present. Backing up..."
-    cp "$HOME"/."$file" "$HOME"/."${file}"_backup
     rm -f "$HOME"/."$file"
   fi
-  fancy_echo "-> Linking $DOTFILES_DIR/$file to $HOME/.$file..."
-  ln -nfs "$DOTFILES_DIR"/"$file" "$HOME"/."$file"
+  fancy_echo "-> Linking $SYMLINKS_DIR/$file to $HOME/.$file..."
+  ln -s "$SYMLINKS_DIR"/"$file" "$HOME"/."$file"
 done
-
-fancy_echo "Creating directories ..."
-
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [ ! -d "$HOME/github/" ]; then
-  mkdir "$HOME/github"
-fi
-
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
-fancy_echo "Cloning Z to jump around ..."
-
-git clone https://github.com/rupa/z.git ~/github/z
-
-fancy_echo "Cloned Z!"
-
-fancy_echo "Cloning Zsh Syntax Highlighting ..."
-
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/github/zsh-syntax-highlighting
-
-fancy_echo "Cloned!"
-
-HOMEBREW_PREFIX="/usr/local"
-
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
-  fi
-else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
-fi
-
-update_shell() {
-  local shell_path;
-  shell_path="$(command -v zsh)"
-
-  fancy_echo "Changing your shell to zsh ..."
-  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-    fancy_echo "Adding '$shell_path' to /etc/shells"
-    sudo sh -c "echo $shell_path >> /etc/shells"
-  fi
-  sudo chsh -s "$shell_path" "$USER"
-}
-
-case "$SHELL" in
-  */zsh)
-    if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
-      update_shell
-    fi
-    ;;
-  *)
-    update_shell
-    ;;
-esac
-
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-  fi
-}
-
-if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
-    curl -fsS \
-      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
     append_to_zshrc '# recommended by brew doctor'
 
@@ -149,161 +65,8 @@ if ! command -v brew >/dev/null; then
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
 
     export PATH="/usr/local/bin:$PATH"
-fi
 
-if brew list | grep -Fq brew-cask; then
-  fancy_echo "Uninstalling old Homebrew-Cask ..."
-  brew uninstall --force brew-cask
-fi
 
-fancy_echo "Updating Homebrew formulas ..."
-brew update --force # https://github.com/Homebrew/brew/issues/1151
-
-fancy_echo "Installing Homebrew formulas ..."
-
-brew bundle --file=- <<EOF
-tap "homebrew/services"
-tap "caskroom/cask"
-
-# Unix
-brew "git"
-brew "gnu-sed", args: ["with-default-names"]
-brew "openssl"
-brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
-brew "tree"
-brew "vim", args: ["with-override-system-vi"]
-brew "wget"
-brew "zsh"
-brew "zsh-completions"
-
-# Programming language prerequisites
-brew "libyaml" # should come after openssl
-
-# Image manipulation
-brew "imagemagick"
-
-# Package managers
-brew "composer"
-brew "yarn", args: ["without-node"]
-
-# Appstore
-brew "mas"
-
-# More recent versions
-brew "bash"
-brew "coreutils"
-brew "findutils"
-brew "gnu-tar"
-
-# dupes
-brew "grep"
-brew "rsync"
-
-# Apps
-cask "1password"
-cask "adobe-creative-cloud"s
-cask "alfred"
-cask "betterzip"
-cask "carbon-copy-cloner"
-cask "cleanmymac"
-cask "cloudapp"
-cask "dropbox"
-cask "flash-player"
-cask "firefox"
-cask "harvest"
-cask "hyper"
-cask "google-chrome"
-cask "imageoptim"
-cask "java"
-cask "kaleidoscope"
-cask "little-snitch"
-cask "local-by-flywheel"
-cask "macdown"
-cask "microsoft-office"
-cask "plistedit-pro"
-cask "postman"
-cask "sequel-pro"
-cask "sizeup"
-cask "skype"
-cask "slack"
-cask "sourcetree"
-cask "sublime-text"
-cask "the-unarchiver"
-cask "tower"
-cask "transmit"
-cask "vagrant"
-cask "visual-studio-code"
-cask "zoomus"
-
-# Quicklook plugins
-# https://github.com/sindresorhus/quick-look-plugins
-
-cask "qlcolorcode"
-cask "qlstephen"
-cask "qlmarkdown"
-cask "quicklook-json"
-cask "qlimagesize"
-cask "webpquicklook"
-cask "suspicious-package"
-cask "quicklookase"
-cask "qlvideo"
-EOF
-
-append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
-
-fancy_echo "Configuring asdf version manager ..."
-if [ ! -d "$HOME/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
-  append_to_zshrc "source $HOME/.asdf/asdf.sh"
-fi
-
-install_asdf_plugin() {
-  local name="$1"
-  local url="$2"
-
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  fi
-}
-
-# shellcheck disable=SC1090
-source "$HOME/.asdf/asdf.sh"
-install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
-
-install_asdf_language() {
-  local language="$1"
-  local version="$2"
-
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-}
-
-fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby" "$ASDF_RUBY_VERSION"
-gem update --system
-gem_install_or_update "bundler"
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing latest Node ..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs" "$ASDF_NODEJS_VERSION"
-
-fancy_echo "Node packages ..."
-
-# Node packages
-npm install -g bower
-npm install -g csslint
-npm install -g eslint
-npm install -g eslint-config-wordpress
-npm install -g gulp
-npm install -g gulp-cli
-npm install -g pure-prompt
-npm install -g sass
-npm install -g sass-lint
-npm install -g tldr
 
 
 append_to_zshrc 'export PATH="$PATH:/usr/local/bin/eslint"'

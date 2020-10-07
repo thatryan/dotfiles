@@ -2,21 +2,8 @@
 source ~/.aliases
 source ~/dotfiles/shell/functions
 source ~/github/z/z.sh
-source ~/.asdf/asdf.sh
 source ~/github/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-autoload -Uz compinit
-typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
-if [ $(date +'%j') != $updated_at ]; then
-  compinit -i
-else
-  compinit -C -i
-fi
-
-zmodload -i zsh/complist
-
-zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
 # Setup prompt
 autoload -U promptinit && promptinit
 prompt pure
@@ -47,13 +34,8 @@ path=(
 )
 
 # recommended by brew doctor
-export PATH="$PATH:/usr/local/bin:$PATH"
-
-export PATH="$PATH:/Users/thatryan/.composer/vendor/bin"
+export PATH="/usr/local/bin:$PATH"
 
 export PATH="$PATH:/usr/local/bin/eslint"
 
 export PATH="$PATH:/usr/local/bin/sass-lint"
-
-export NVM_DIR="/Users/thatryan/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
