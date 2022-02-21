@@ -77,7 +77,11 @@ source ~/Dropbox/local-dotfiles/mas.sh
 ## UPDATES NEEDED
 
 I really need to go over this, here are some spots I want to look for updates in future :)
+
 [webpro article](https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789)
+
 [Paul's dotfiles](https://github.com/paulirish/dotfiles)
+
 [Webpro's dotfiles](https://github.com/webpro/dotfiles)
+
 [driesvints dotfiles](https://github.com/driesvints/dotfiles)
