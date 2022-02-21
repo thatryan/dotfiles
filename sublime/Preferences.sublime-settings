@@ -11,31 +11,34 @@
 		"languages/",
 		"docs/"
 	],
-	"color_scheme": "Packages/Color Scheme - Default/Mariana.sublime-color-scheme",
+	"color_scheme": "Packages/Agila Theme/Agila Origin Oceanic Next.tmTheme",
 	"drag_text": false,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
-		"package-lock.json"
+		"package-lock.json",
+		"store.json",
+		"*.pack"
 	],
 	"folder_exclude_patterns":
 	[
 		".github",
 		".sass-cache",
 		".cache-loader",
-		"docs"
+		"docs",
+		".hg",
+		".git"
 	],
-	"font_face": "CamingoCode",
+	"font_face": "Fira Code Retina",
 	"font_options":
 	[
-		"no_bold",
 		"subpixel_antialias"
 	],
-	"font_size": 16,
+	"font_size": 18,
 	"highlight_line": true,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
 	],
 	"indent_guide_options":
 	[
@@ -47,7 +50,13 @@
 		100,
 		120
 	],
-	"theme": "Adaptive.sublime-theme",
+	"theme": "Agila Origin.sublime-theme",
+	"theme_agila_active_tab_entry_lightblue": true,
+	"theme_agila_compact_sidebar": true,
+	"theme_agila_modified_tab_marker_yellow": true,
+	"theme_agila_sidebar_light_icons": true,
+	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"word_wrap": "true"
+	"word_wrap": "true",
+	"update_check": true,
 }

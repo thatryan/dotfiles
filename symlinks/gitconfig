@@ -1,112 +1,124 @@
 [alias]
-
-    # Commit with message
+  # Commit with message
 	c = commit -am
-
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
-
 	# View the current working tree status using the short format
 	s = status -v
-
-    # Shorthand for version bump commit message
-    vb = commit -am 'version bump'
-
-    # I get lazy
-    co = checkout
-
-    # Checkout and pull master easier
-    com = !"git checkout master && git pull"
-
-    # I hate pushing tags
-    pt = !"git push && git push --tags"
-
+  # Shorthand for version bump commit message
+  vb = commit -am 'version bump'
+  # I get lazy
+  co = checkout
+  # Checkout and pull master easier
+  com = !"git checkout master && git pull"
+  # I hate pushing tags
+  pt = !"git push && git push --tags"
 	# show current branch
 	b = branch
-
 	# Show the diff between the latest commit and the current state
 	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-
 	# Switch to a branch, creating it if necessary
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
-
 	# List aliases
 	aliases = config --get-regexp alias
-
 	# Amend the currently staged files to the latest commit
 	amend = commit --amend --reuse-message=HEAD
-
     # Clean up the branches
 	pruneit = !"git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done"
 
 [core]
 	autocrlf = input
-	excludesfile = /Users/thatryan/.gitignore_global
+	excludesfile = ~/.gitignore_global
 
+# so much color
 [color]
-
-	# Use colors in Git commands that are capable of colored output when
-	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
 	ui = auto
 
-[color "branch"]
+[color "diff"]  # i still love these choices in 2022.
+	meta = yellow bold
+	commit = green bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 
+	newMoved = cyan dim
+	oldMoved = blue dim
+	newMovedAlternative = cyan italic
+	oldMovedAlternative = blue italic
+
+[color "branch"]
 	current = yellow reverse
 	local = yellow
 	remote = green
 
-[color "diff"]
-
-	meta = yellow bold
-	frag = magenta bold # line info
-	old = red # deletions
-	new = green # additions
-
 [color "status"]
-
 	added = yellow
 	changed = green
 	untracked = cyan
 
+[color "diff-highlight"]  # mostly dead. only needed when using diff-so-fancy
+	oldNormal = red bold
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+
 [credential]
 	helper = osxkeychain
 
+[diff]
+	# Show blocks of moved text of at least 20 alphanumeric characters differently than adds/deletes
+	# https://blog.github.com/2018-04-05-git-217-released/
+	colorMoved = default
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
+
+# correct typos
+[help]
+	autocorrect = 1
+
+# git mergetool
+[merge]
+	tool = opendiff
+	renameLimit = 0
+
+
+# push easily. http://stackoverflow.com/a/23918418/89484
 [push]
-  default = current
+	default = current
+	followTags = true
 
-  # URL shorthands
+[pull]
+	ff = only
+	default = current
 
-  [url "git@github.com:"]
-
-  	insteadOf = "gh:"
-  	pushInsteadOf = "github:"
-  	pushInsteadOf = "git://github.com/"
-
-  [url "git://github.com/"]
-
-  	insteadOf = "github:"
-
-  [url "git@gist.github.com:"]
-
-  	insteadOf = "gst:"
-  	pushInsteadOf = "gist:"
-  	pushInsteadOf = "git://gist.github.com/"
+[checkout]
+	defaultRemote = origin
 
 [include]
   path = ~/.gitconfig.local
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[user]
-	name = Ryan Olson
-	email = rolson@dealerinspire.com
-[commit]
-	template = /Users/thatryan/.stCommitMsg
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+
+[fetch]
+	prune = true
+
+[stash]
+	showPatch = true
+
+[log]
+	date = relative
+
+[protocol]
+	version = 2

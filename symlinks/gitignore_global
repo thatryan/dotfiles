@@ -58,3 +58,6 @@ desktop.ini
 node_modules/
 
 *store.json
+
+db.php-e
+wp-site-config.php-e

@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# My new Mac setup script, most of it ganked from
-# https://github.com/thoughtbot/laptop
-
 DOTFILES_DIR="$HOME/dotfiles"
 
 fancy_echo() {
@@ -42,8 +39,6 @@ files=(
 "aliases"
 "gitconfig"
 "gitignore_global"
-"hushlogin"
-"hyper.js"
 "zshenv"
 "zshrc"
 )
@@ -59,15 +54,12 @@ for file in "${files[@]}"; do
   ln -s "$SYMLINKS_DIR"/"$file" "$HOME"/."$file"
 done
 
-    append_to_zshrc '# recommended by brew doctor'
+append_to_zshrc '# recommended by brew doctor'
 
-    # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+# shellcheck disable=SC2016
+append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
 
-    export PATH="/usr/local/bin:$PATH"
-
-
-
+export PATH="/usr/local/bin:$PATH"
 
 append_to_zshrc 'export PATH="$PATH:/usr/local/bin/eslint"'
 append_to_zshrc 'export PATH="$PATH:/usr/local/bin/sass-lint"'

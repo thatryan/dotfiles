@@ -9,77 +9,70 @@ alias rm="rm -fir"
 
 alias hosts='sudo $EDITOR /etc/hosts'
 
-# Copy to clipboard
-alias cc='pbcopy'
-alias cp='pbpaste'
-
-# Lock current session and proceed to the login screen.
-alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-
-# Detect which `ls` flavor is in use
-if gls --color > /dev/null 2>&1; then # GNU `ls`
-	colorflag="--color"
-else # OS X `ls`
-	colorflag="-G"
-fi
-
-# ls options: F = put `/` after folders, h = byte unit suffixes, color! (even with piping to awk)
-alias ls='CLICOLOR_FORCE=1 gls -aFh ${colorflag} --group-directories-first'
-
-# List only directories
-alias lsd='ls -l | grep "^d"'
-
-# IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en1"
-alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
-
-# All the dig info
-alias dig="dig +nocmd any +multiline +noall +answer"
-
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache"
 
-alias plugins='cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/plugins'
-alias dealer='cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/themes/DealerInspireDealerTheme'
-alias common='cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/themes/DealerInspireCommonTheme'
-alias dockerup='cd ~/code/dealerinspire/enrollment-core-api && docker-compose up'
 # Vagrant commands
 alias vf='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local'
 alias vup='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local && vagrant up'
 alias vssh='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local && vagrant ssh'
 alias vhalt='cd ~/code/dealerinspire/vagrant/com.dealerinspire.wordpress.local && vagrant halt'
 
+# Enrollments API
+alias apiup='cd ~/code/dealerinspire/enrollment-core-api && docker-compose up'
 
-#########################################################
-# Pull all the repos in your code directory at once
-#########################################################
+# Docker commands (Docker for the DI Platform)
+export DI_WP_DOCKER="/Users/$(whoami)/code/dealerinspire/feature-dev-shared-scripts/di-wp-docker"
+alias df="cd $DI_WP_DOCKER"
+alias dup="docker-compose -f $DI_WP_DOCKER/docker-compose.yml up -d"
+alias dbuild="docker-compose -f $DI_WP_DOCKER/docker-compose.yml up --build -d"
+alias dssh='docker exec -it "$(docker ps --filter name=web -q)" /bin/bash'
+alias migrate='docker exec -it "$(docker ps --filter name=web -q)" /bin/bash -c "cd bootstrap && php clear_cache.php"'
+alias dhalt="docker-compose -f $DI_WP_DOCKER/docker-compose.yml down"
+alias ddb='{{MYSQL_TOOL}} dealerinspire_dev -h 127.0.0.1 -P 33306 -u dealer_inspire --pass awesome1234'
+alias dddb="{{MYSQL_TOOL}} --defaults-extra-file=$DI_WP_DOCKER/bin/.docker.sql.cnf -D dealerinspire_dev"
+alias dreboot="docker-compose -f $DI_WP_DOCKER/docker-compose.yml down && docker-compose -f $DI_WP_DOCKER/docker-compose.yml up -d"
+alias dredis='docker exec -it di-wp-docker_redis_1 redis-cli'
+alias fredis='echo FLUSHALL | docker exec di-wp-docker_redis_1 redis-cli'
+alias dtoggle='docker exec -it di-wp-docker_web_1 xdebug-toggle'
 
-pull_all_repos() {
-    DEV=~/code
+#Alias for navigating the DI WordPress directory
+export DI_HOME_DIR="/Users/$(whoami)/code/dealerinspire/dealerinspire-core/dealer-inspire"
+alias dealer="cd $DI_HOME_DIR/wp-content/themes/DealerInspireDealerTheme"
+alias common="cd /$DI_HOME_DIR/wp-content/themes/DealerInspireCommonTheme"
+alias plugins="cd $DI_HOME_DIR/wp-content/plugins"
+alias idp="cd $DI_HOME_DIR/wp-content/plugins/dealerinspire-inventory-display"
 
-    (find $DEV -type d -name .hg | while read line; do cd $line && hg up -C && hg pull -u; done && echo -e "\033[0;32mALL THE REPOSITORIES have been pulled.\033[0m") || (echo -e "\033[0;31mThere was an error!\033[0m")
+alias core="cd ~/code/dealerinspire/dealerinspire-core/"
 
-    $SHELL
+alias sshcomposer="ssh rolson@composer.infra.dealerinspire.com"
+alias composerrepo="cd ~/code/dealerinspire/dealer-inspire-composer"
+alias inventorycache="rm -rv ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/uploads/inventory/cache"
+alias sshdev="ssh rolson@a.dev.dealerinspire.com"
+
+alias dxoff='xtoggle off'
+alias dxon='xtoggle on'
+
+if [ -x "$(command -v exa)" ]; then
+    alias ls="exa"
+    alias la="exa --long --all --group"
+fi
+
+xtoggle () {
+    if [[ "$1" == "off" ]]
+    then
+        sed -i '.bak' -e 's/develop,debug/off/g' $DI_WP_DOCKER/php/conf.d/docker-php-ext-xdebug.ini
+    else
+        sed -i '.bak' -e 's/off/develop,debug/g' $DI_WP_DOCKER/php/conf.d/docker-php-ext-xdebug.ini
+    fi
+    webcontainer="$(docker ps --filter name=di-wp-docker_web -q)"
+    echo "Restarting web container, please wait..."
+    docker restart $webcontainer
+    if [[ "$1" == "off" ]]
+    then
+        echo "XDEBUG is now Off"
+    else
+        echo "XDEBUG is now On"
+    fi
 }
 
-collect_input() {
-    prompt="$1"
-    echo -e "\033[0;33m$prompt"
-    echo -e "\033[0;33mYes (y) or No (n)?"
-    echo -en "\033[0m"
-
-    while true; do
-        vared -p "" -c yn
-        case $yn in
-            Y|y ) pull_all_repos;;
-            N|n ) $SHELL;;
-            *   ) echo -e -n "\033[0;31mPlease answer yes (y) or no (n).\033[0m";;
-        esac
-    done
-}
-
-alias pall="collect_input 'Running this script will wipe out any uncommitted changes. Please check your changes first.'"
-
-# Include custom aliases
-[[ -f ~/.aliases.local ]] && source ~/.aliases.local

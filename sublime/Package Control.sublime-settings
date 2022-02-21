@@ -7,11 +7,13 @@
 	[
 		"A File Icon",
 		"AdvancedNewFile",
+		"Agila Theme",
 		"AlignTab",
 		"BracketHighlighter",
 		"Color Highlighter",
 		"DocBlockr",
 		"EditorConfig",
+		"Emmet",
 		"Gist",
 		"GitGutter",
 		"HTML-CSS-JS Prettify",
@@ -26,7 +28,9 @@
 		"SublimeLinter-contrib-sass-lint",
 		"SublimeLinter-csslint",
 		"SublimeLinter-eslint",
+		"SublimeLinter-phpcs",
 		"TrailingSpaces",
-		"WordPress Completions"
-	]
+		"WordPress Completions",
+		"Xdebug Client",
+	],
 }
