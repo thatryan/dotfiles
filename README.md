@@ -69,6 +69,17 @@ source ~/Dropbox/local-dotfiles/mas.sh
 
 * Setup SSH keys [github](https://help.github.com/articles/connecting-to-github-with-ssh/)
 
+Install NVM and some Node stuffs
+
+```bash
+# Node packages
+npm install -g eslint
+npm install -g gulp
+npm install -g gulp-cli
+npm install -g sass-lint
+npm install -g tldr
+```
+
 #### See if I want need to keep or add/remove apps
 
 * read `brew list` and `brew cask list` to see whats worth reinstalling
