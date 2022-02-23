@@ -54,12 +54,12 @@ for file in "${files[@]}"; do
   ln -s "$SYMLINKS_DIR"/"$file" "$HOME"/."$file"
 done
 
-append_to_zshrc '# recommended by brew doctor'
+fancy_echo "Creating directories ..."
 
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+fi
 
-export PATH="/usr/local/bin:$PATH"
-
-append_to_zshrc 'export PATH="$PATH:/usr/local/bin/eslint"'
-append_to_zshrc 'export PATH="$PATH:/usr/local/bin/sass-lint"'
+if [ ! -d "$HOME/github/" ]; then
+  mkdir "$HOME/github"
+fi

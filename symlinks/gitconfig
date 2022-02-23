@@ -33,6 +33,7 @@
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
+	editor = "subl -n -w"
 
 # so much color
 [color]

@@ -24,7 +24,7 @@ removing the auto run, doing it manually for now...
 
 ```bash
 brew tap homebrew/bundle
-brew bundle --file $DOTFILES/Brewfile
+brew bundle --file ~/dotfiles/Brewfile
 ```
 
 ## Sublime
@@ -46,10 +46,11 @@ $ ./setup-prefs
 ### Be sure you read through what the scripts do first! Questions, [just ask](https://github.com/thatryan/dotfiles/issues).
 
 ## Local Config Files
-I keep private infos in local files in Dropbox, so once it is setup and linked to my account I run these
+I keep private infos in local files in Dropbox, so once it is setup and linked to my account I run one of these depending on machine
 
 ```bash
-ln -s ~/Dropbox/local-dotfiles/.gitconfig.local ~/.gitconfig.local
+ln -s ~/Dropbox/local-dotfiles/.gitconfig.personal ~/.gitconfig.local
+ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local
 ```
 
 ### Mac App Store
