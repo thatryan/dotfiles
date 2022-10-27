@@ -1,6 +1,7 @@
 # | Navigation
 alias ~="cd ~"
 alias ..="cd .."
+alias aliases='subl ~/dotfiles/symlinks/aliases'
 
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
@@ -45,10 +46,18 @@ alias idp="cd $DI_HOME_DIR/wp-content/plugins/dealerinspire-inventory-display"
 
 alias core="cd ~/code/dealerinspire/dealerinspire-core/"
 
+alias cleardebug="true > ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/debug.log"
+alias debug="open ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/debug.log"
+
 alias sshcomposer="ssh rolson@composer.infra.dealerinspire.com"
 alias composerrepo="cd ~/code/dealerinspire/dealer-inspire-composer"
 alias inventorycache="rm -rv ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/uploads/inventory/cache"
 alias sshdev="ssh rolson@a.dev.dealerinspire.com"
+
+# Devtools
+alias dt="devtools"
+alias dts="devtools search"
+alias dtp="devtools -p"
 
 alias dxoff='xtoggle off'
 alias dxon='xtoggle on'

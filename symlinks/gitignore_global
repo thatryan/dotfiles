@@ -28,6 +28,7 @@
 *.log
 *.sql
 *.sqlite
+*debug.log.old
 
 # OS generated files #
 ######################

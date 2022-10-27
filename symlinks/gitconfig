@@ -32,8 +32,9 @@
 
 [core]
 	autocrlf = input
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/thatryan/.gitignore_global
 	editor = "subl -n -w"
+	pager = delta
 
 # so much color
 [color]
@@ -88,9 +89,13 @@
 
 # git mergetool
 [merge]
-	tool = opendiff
-	renameLimit = 0
+	conflictstyle = diff3
 
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
 
 # push easily. http://stackoverflow.com/a/23918418/89484
 [push]
@@ -123,3 +128,13 @@
 
 [protocol]
 	version = 2
+[user]
+	name = Ryan Olson
+	email = rolson@dealerinspire.com
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 

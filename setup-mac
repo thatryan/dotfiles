@@ -39,6 +39,7 @@ files=(
 "aliases"
 "gitconfig"
 "gitignore_global"
+"hushlogin"
 "zshenv"
 "zshrc"
 )
