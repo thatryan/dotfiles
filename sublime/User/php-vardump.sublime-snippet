@@ -1,0 +1,9 @@
+<snippet>
+    <!-- Type `echovardump` and hit tab to output the print_r function wrapped in xmp tags mixin. -->
+    <!-- The cursor will be placed inside of the var_dump function and inside of the preceding <strong> tags. -->
+    <content><![CDATA[
+var_dump(compact( ${1} ));die();
+]]></content>
+    <tabTrigger>echovardump</tabTrigger>
+    <scope>source.php</scope>
+</snippet>

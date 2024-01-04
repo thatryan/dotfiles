@@ -1,0 +1,71 @@
+{
+	"binary_file_patterns":
+	[
+		"*.yml",
+		"*.min.js",
+		"*.bundle.js",
+		"*.min.css",
+		"*.map",
+		"style.css",
+		"bower_components/",
+		"node_modules/",
+		"languages/",
+		"docs/"
+	],
+	"color_scheme": "Dark+.sublime-color-scheme",
+	"drag_text": false,
+	"ensure_newline_at_eof_on_save": true,
+	"file_exclude_patterns":
+	[
+		"package-lock.json",
+		"store.json",
+		"*.pack"
+	],
+	"folder_exclude_patterns":
+	[
+		".github",
+		".sass-cache",
+		".cache-loader",
+		"docs",
+		".hg",
+		".git"
+	],
+	"font_face": "Fira Code Retina",
+	"font_options":
+	[
+		"subpixel_antialias"
+	],
+	"font_size": 22,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"indent_guide_options":
+	[
+		"draw_active"
+	],
+	"margin": 20,
+	"line_padding_bottom": 7,
+	"line_padding_top": 7,
+	"caret_extra_bottom": 12,
+	"caret_extra_top": 12,
+	"hide_tab_scrolling_buttons": true,
+
+	"rulers":
+	[
+		80,
+		100,
+		120
+	],
+	"theme": "Agila.sublime-theme",
+	"theme_agila_active_tab_entry_lightblue": true,
+	"theme_agila_compact_sidebar": true,
+	"theme_agila_modified_tab_marker_yellow": true,
+	"theme_agila_sidebar_light_icons": true,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"word_wrap": "true",
+	"update_check": true,
+	"index_files": true,
+}

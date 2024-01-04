@@ -20,12 +20,18 @@ To setup clone the repository from your home directory
 git clone https://github.com/thatryan/dotfiles.git
 ```
 
-removing the auto run, doing it manually for now...
+Homebrew
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 ```bash
 brew tap homebrew/bundle
 brew bundle --file ~/dotfiles/Brewfile
 ```
+
+Install and setup P10K
+https://github.com/romkatv/powerlevel10k
 
 ## Sublime
 

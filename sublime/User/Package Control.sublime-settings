@@ -1,0 +1,28 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"AdvancedNewFile",
+		"Agila Theme",
+		"AlignTab",
+		"BracketHighlighter",
+		"Color Highlighter",
+		"EditorConfig",
+		"Emmet",
+		"GitGutter",
+		"GitHub Theme",
+		"JavaScript Completions",
+		"Package Control",
+		"Phpcs",
+		"Sass",
+		"SideBarEnhancements",
+		"TrailingSpaces",
+		"Visual Studio Code Plus Scheme",
+		"Vue Syntax Highlight",
+		"Xdebug Client",
+	],
+}

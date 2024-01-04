@@ -1,0 +1,14 @@
+<snippet>
+    <!-- Type `selectorcomment` or `scomment` and hit tab to output a comment block. -->
+    <!-- Type a short description of the element you are styling and you're good to go! -->
+    <content><![CDATA[
+//-----------------------------------------
+// ${1:Selector Comment}
+//-----------------------------------------
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>selectorcomment</tabTrigger>
+    <tabTrigger>scomment</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.scss</scope>
+</snippet>

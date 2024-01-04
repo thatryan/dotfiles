@@ -16,4 +16,4 @@ Grab the current installation code from [Package Control Site](https://packageco
 
 #### Install Packages
 
-Move `Package Control.sublime-settings` to the `Packages/user/` directory and restart Sublime.
+Move contents of `/User` to the `Packages/user/` directory and restart Sublime.

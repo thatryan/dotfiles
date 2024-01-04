@@ -1,0 +1,12 @@
+<snippet>
+        <!-- Type `jquery-wds` and hit tab to output a ready-to-use jQuery function. -->
+        <content><![CDATA[
+// START - DYNAMIC HEADER PLACEMENT FOR MODEL PAGES
+var topheader = \$("#${1:header}" ).css( "height" );
+\$(".${2:vwca-model-hero}").css("margin-top", topheader);
+// END - DYNAMIC HEADER PLACEMENT FOR MODEL PAGES$0
+]]></content>
+    <tabTrigger>dynamic-header</tabTrigger>
+    <description>JS for dynamic header margin</description>
+    <scope>source.js, source.html, source.php</scope>
+</snippet>

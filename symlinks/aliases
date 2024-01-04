@@ -2,13 +2,25 @@
 alias ~="cd ~"
 alias ..="cd .."
 alias aliases='subl ~/dotfiles/symlinks/aliases'
+alias zs='subl ~/.zshrc'
+
+# PHP switching
+alias php7="brew unlink php@8.1 php && brew link --overwrite --force shivammathur/php/php@7.4"
+alias php81="brew unlink php@7.4 php && brew link --overwrite --force shivammathur/php/php@8.1"
+alias php82="brew unlink php@7.4 php@8.1 && brew link --overwrite --force shivammathur/php/php"
 
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+# Kubernetes
+alias lndi-inventory='export AWS_PROFILE=inventory-non-prod-423154430651 ; saml2aws login -a inventory-non-prod-423154430651'
+alias k="kubectl "
+alias pstorm="open -na 'PhpStorm.app'"
 
 # | Shorter Commands
 alias rm="rm -fir"
 
-alias hosts='sudo $EDITOR /etc/hosts'
+alias hosts='sudo subl /etc/hosts'
+
+alias nn='nvm use 14'
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache"
@@ -33,7 +45,7 @@ alias dhalt="docker-compose -f $DI_WP_DOCKER/docker-compose.yml down"
 alias ddb='{{MYSQL_TOOL}} dealerinspire_dev -h 127.0.0.1 -P 33306 -u dealer_inspire --pass awesome1234'
 alias dddb="{{MYSQL_TOOL}} --defaults-extra-file=$DI_WP_DOCKER/bin/.docker.sql.cnf -D dealerinspire_dev"
 alias dreboot="docker-compose -f $DI_WP_DOCKER/docker-compose.yml down && docker-compose -f $DI_WP_DOCKER/docker-compose.yml up -d"
-alias dredis='docker exec -it di-wp-docker_redis_1 redis-cli'
+alias dredis='docker exec -it di-wp-docker-redis-1 redis-cli'
 alias fredis='echo FLUSHALL | docker exec di-wp-docker_redis_1 redis-cli'
 alias dtoggle='docker exec -it di-wp-docker_web_1 xdebug-toggle'
 
@@ -45,6 +57,7 @@ alias plugins="cd $DI_HOME_DIR/wp-content/plugins"
 alias idp="cd $DI_HOME_DIR/wp-content/plugins/dealerinspire-inventory-display"
 
 alias core="cd ~/code/dealerinspire/dealerinspire-core/"
+alias di="cd ~/code/dealerinspire/dealerinspire-core/dealer-inspire/"
 
 alias cleardebug="true > ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/debug.log"
 alias debug="open ~/code/dealerinspire/dealerinspire-core/dealer-inspire/wp-content/debug.log"

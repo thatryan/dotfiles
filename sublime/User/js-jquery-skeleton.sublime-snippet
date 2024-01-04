@@ -1,0 +1,53 @@
+<snippet>
+        <!-- Type `jquery-wds` and hit tab to output a ready-to-use jQuery function. -->
+        <content><![CDATA[
+/**
+ * Foo Script
+ */
+window.Foo_Object = {};
+( function( window, \$, that ) {
+
+    // Private variable
+    var fooVariable = 'foo';
+
+    // Constructor
+    that.init = function() {
+        that.cache();
+
+        if ( that.meetsRequirements() ) {
+            that.bindEvents();
+        }
+    };
+
+    // Cache all the things
+    that.cache = function() {
+        that.\$c = {
+            window: \$(window),
+            fooSelector: \$( '.foo' ),
+        };
+    };
+
+    // Combine all events
+    that.bindEvents = function() {
+        that.\$c.window.on( 'load', that.doFoo );
+    };
+
+    // Do we meet the requirements?
+    that.meetsRequirements = function() {
+        return that.\$c.fooSelector.length;
+    };
+
+    // Some function
+    that.doFoo = function() {
+        // do stuff
+    };
+
+    // Engage
+    \$( that.init );
+
+})( window, jQuery, window.Foo_Object );
+]]></content>
+    <tabTrigger>jquery-wds</tabTrigger>
+    <description>Insert a Javascript function - the WDS way</description>
+    <scope>source.js</scope>
+</snippet>

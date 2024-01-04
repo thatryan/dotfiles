@@ -1,0 +1,10 @@
+<snippet>
+    <!-- Type `echoprintr` and hit tab to output the print_r function wrapped in xmp tags mixin. -->
+    <!-- The cursor will be placed inside of the print_r function. -->
+    <!-- Hitting tab will palce the cursor before the colon inside the opening xmp tag for the addition of helper text. -->
+    <content><![CDATA[
+echo '<pre>${2}: '. print_r( ${1}, true ) .'</pre>';$0
+]]></content>
+    <tabTrigger>echoprintr</tabTrigger>
+    <scope>source.php</scope>
+</snippet>

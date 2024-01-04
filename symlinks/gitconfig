@@ -1,4 +1,6 @@
 [alias]
+	# fuck it, redo
+	nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
   # Commit with message
 	c = commit -am
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
@@ -68,10 +70,6 @@
 	oldHighlight = "red bold 52"
 	newNormal = "green bold"
 	newHighlight = "green bold 22"
-
-[credential]
-	helper = osxkeychain
-
 [diff]
 	# Show blocks of moved text of at least 20 alphanumeric characters differently than adds/deletes
 	# https://blog.github.com/2018-04-05-git-217-released/
@@ -113,9 +111,10 @@
   path = ~/.gitconfig.local
 
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 
 [fetch]
 	prune = true
@@ -138,3 +137,7 @@
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+[commit]
+	template = /Users/thatryan/.stCommitMsg
+[credential]
+	helper = osxkeychain
