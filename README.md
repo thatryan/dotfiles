@@ -33,43 +33,11 @@ brew bundle --file ~/dotfiles/Brewfile
 Install and setup P10K
 https://github.com/romkatv/powerlevel10k
 
+https://medium.com/@Clovis_app/configuration-of-a-beautiful-efficient-terminal-and-prompt-on-osx-in-7-minutes-827c29391961
+
 ## Sublime
 
 Setup [Sublime](/sublime) Text 3 and packages/settings
-
-
-#### Linting with Sublime
-Confirm setup and install PHPCS, follow this [epic guide](https://webdevstudios.com/2017/04/06/lint-code-like-boss/)
-
-
-After, if you wish to setup OS X preferences run,
-##### Note* open chrome first, so its settings in setup will be applied.
-
-```bash
-$ ./setup-prefs
-```
-
-### Be sure you read through what the scripts do first! Questions, [just ask](https://github.com/thatryan/dotfiles/issues).
-
-## Local Config Files
-I keep private infos in local files in Dropbox, so once it is setup and linked to my account I run one of these depending on machine
-
-```bash
-ln -s ~/Dropbox/local-dotfiles/.gitconfig.personal ~/.gitconfig.local
-ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local
-```
-
-### Mac App Store
-
-> Sign into MAS manually first [bug](https://github.com/mas-cli/mas/issues/164)
-
-Get app from mac app store using [mas](https://github.com/mas-cli/mas)
-
-```bash
-source ~/Dropbox/local-dotfiles/mas.sh
-```
-## Features
-*
 
 ## Post Setup Reminders
 
@@ -79,10 +47,8 @@ Install NVM and some Node stuffs
 
 ```bash
 # Node packages
-npm install -g eslint
 npm install -g gulp
 npm install -g gulp-cli
-npm install -g sass-lint
 npm install -g tldr
 ```
 

@@ -27,3 +27,6 @@
 [alias]
 b = branch
 log = log -l 5
+
+[ui]
+color = yes
