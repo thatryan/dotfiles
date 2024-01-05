@@ -5,7 +5,7 @@ alias ..="cd .."
 # PHP switching
 alias php7="brew unlink php@8.1 php && brew link --overwrite --force shivammathur/php/php@7.4"
 alias php81="brew unlink php@7.4 php && brew link --overwrite --force shivammathur/php/php@8.1"
-alias php82="brew unlink php@7.4 php@8.1 && brew link --overwrite --force shivammathur/php/php"
+alias php83="brew unlink php@7.4 php@8.1 && brew link --overwrite --force shivammathur/php/php"
 
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 # Kubernetes
@@ -71,9 +71,9 @@ alias dtp="devtools -p"
 alias dxoff='xtoggle off'
 alias dxon='xtoggle on'
 
-if [ -x "$(command -v exa)" ]; then
-    alias ls="exa"
-    alias la="exa --long --all --group"
+if [ -x "$(command -v eza)" ]; then
+    alias ls="eza"
+    alias la="eza --long --all --group"
 fi
 
 xtoggle () {

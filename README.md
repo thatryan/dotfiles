@@ -35,6 +35,12 @@ https://github.com/romkatv/powerlevel10k
 
 https://medium.com/@Clovis_app/configuration-of-a-beautiful-efficient-terminal-and-prompt-on-osx-in-7-minutes-827c29391961
 
+add plugins to zshrc
+
+```bash
+git zoxide zsh-syntax-highlighting zsh-autosuggestions
+```
+
 ## Sublime
 
 Setup [Sublime](/sublime) Text 3 and packages/settings
@@ -49,7 +55,6 @@ Install NVM and some Node stuffs
 # Node packages
 npm install -g gulp
 npm install -g gulp-cli
-npm install -g tldr
 ```
 
 #### See if I want need to keep or add/remove apps
