@@ -37,8 +37,10 @@ SYMLINKS_DIR=$HOME/dotfiles/symlinks
 
 files=(
 "aliases"
+"better-commits.json"
 "gitconfig"
 "gitignore_global"
+"hgrc"
 "hushlogin"
 "zshenv"
 "zshrc"
