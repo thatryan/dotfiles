@@ -20,6 +20,20 @@ To setup clone the repository from your home directory
 git clone https://github.com/thatryan/dotfiles.git
 ```
 
+Add symlinks and create some directories
+
+```bash
+$ ./yolo
+```
+
+## Local Config Files
+I keep private infos in local files in Dropbox, so once it is setup and linked to my account I run one of these depending on machine
+
+```bash
+ln -s ~/Dropbox/local-dotfiles/.gitconfig.personal ~/.gitconfig.local
+ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local
+```
+
 Homebrew
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
