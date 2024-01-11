@@ -44,10 +44,27 @@ brew tap homebrew/bundle
 brew bundle --file ~/dotfiles/Brewfile
 ```
 
+add logitech apps to readme after brewfile
+- logitune
+- logioptions+
+
+#### Oh My
+https://ohmyz.sh/#install
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+and plugins...
+[Suggestions](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh)
+[Highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
 Install and setup P10K
 https://github.com/romkatv/powerlevel10k
 
-https://medium.com/@Clovis_app/configuration-of-a-beautiful-efficient-terminal-and-prompt-on-osx-in-7-minutes-827c29391961
 
 add plugins to zshrc
 
@@ -55,9 +72,22 @@ add plugins to zshrc
 git zoxide zsh-syntax-highlighting zsh-autosuggestions
 ```
 
-## Sublime
+#### Get snazzy!
+https://github.com/sindresorhus/iterm2-snazzy
+
+### Editors
 
 Setup [Sublime](/sublime) Text 3 and packages/settings
+
+Add some VS Code config
+
+```bash
+"editor.fontSize": 18,
+"editor.fontFamily": "FiraCode Nerd Font Mono",
+"window.zoomLevel": 1.4,
+"terminal.integrated.fontSize": 14,
+"terminal.integrated.localEchoStyle": "dim",
+```
 
 ## Post Setup Reminders
 

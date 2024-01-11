@@ -26,8 +26,8 @@ alias nn='nvm use 14'
 alias flush="dscacheutil -flushcache"
 
 # Enrollments API
-alias enrol='cd ~/code/dealerinspire/enrollment-core-api'
-alias enup='cd ~/code/dealerinspire/enrollment-core-api && docker-compose up'
+alias enrol='cd ~/code/enrollment-core-api'
+alias enup='cd ~/code/enrollment-core-api && docker-compose up'
 
 # Docker commands (Docker for the DI Platform)
 export DI_WP_DOCKER="/Users/$(whoami)/code/dealerinspire/feature-dev-shared-scripts/di-wp-docker"
@@ -72,8 +72,9 @@ alias dxoff='xtoggle off'
 alias dxon='xtoggle on'
 
 if [ -x "$(command -v eza)" ]; then
-    alias ls="eza"
-    alias la="eza --long --all --group"
+    alias ls="eza -1 --group-directories-first"
+    alias lt="eza -T"
+    alias la="eza --long --all --header --group-directories-first"
 fi
 
 xtoggle () {
