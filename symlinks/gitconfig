@@ -1,36 +1,46 @@
 [alias]
-	# fuck it, redo
-	nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
-  # Commit with message
-	c = commit -am
-	# View abbreviated SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
-	# View the current working tree status using the short format
-	s = status -v
-  # Shorthand for version bump commit message
-  vb = commit -am 'version bump'
-  # I get lazy
-  co = checkout
-  # Checkout and pull master easier
-  com = !"git checkout master && git pull"
-  # I hate pushing tags
-  pt = !"git push && git push --tags"
-	# show current branch
-	b = branch
-	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-	# Switch to a branch, creating it if necessary
-	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
 	# List aliases
 	aliases = config --get-regexp alias
 	# Amend the currently staged files to the latest commit
 	amend = commit --amend --reuse-message=HEAD
-    # Clean up the branches
+	# fuck it, redo
+	nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
+	# show current branch
+	b = branch
+	branches = branch -a
+	c = commit -am
+	cherrypick = cherry-pick
+	# I get lazy
+	co = checkout
+	# Checkout and pull master easier
+	com = !"git checkout master && git pull"
+	cp = cherry-pick
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	# Switch to a branch, creating it if necessary
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+	last = checkout -
+	# logs
+	l = log -n 20 --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	ld = "!sh -c \"git log --since '${1:-1} days ago' --oneline --author $(git config user.email)\" -"
+	ll = log --graph --abbrev-commit --pretty=oneline
+	lm = log --pretty=format:'* %s (%h)'
+	# Clean up the branches
 	pruneit = !"git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done"
+	remotes = remote -v
+	s = status -s
+	sv = status -v
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	unstage = reset --hard HEAD
+	# Shorthand for version bump commit message
+	vb = commit -am 'version bump'
+
+[checkout]
+	defaultRemote = origin
+
+[color]
+	ui = auto
 
 [core]
 	autocrlf = input
@@ -38,71 +48,26 @@
 	editor = "subl -n -w"
 	pager = delta
 
-# so much color
-[color]
-	ui = auto
-
-[color "diff"]  # i still love these choices in 2022.
-	meta = yellow bold
-	commit = green bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-
-	newMoved = cyan dim
-	oldMoved = blue dim
-	newMovedAlternative = cyan italic
-	oldMovedAlternative = blue italic
-
-[color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
-
-[color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-
-[color "diff-highlight"]  # mostly dead. only needed when using diff-so-fancy
-	oldNormal = red bold
-	oldHighlight = "red bold 52"
-	newNormal = "green bold"
-	newHighlight = "green bold 22"
-[diff]
-	# Show blocks of moved text of at least 20 alphanumeric characters differently than adds/deletes
-	# https://blog.github.com/2018-04-05-git-217-released/
-	colorMoved = default
-
-# correct typos
-[help]
-	autocorrect = 1
-
-# git mergetool
-[merge]
-	conflictstyle = diff3
-
-[interactive]
-    diffFilter = delta --color-only
+[credential]
+	helper = osxkeychain
 
 [delta]
     navigate = true  # use n and N to move between diff sections
 
-# push easily. http://stackoverflow.com/a/23918418/89484
-[push]
-	default = current
-	followTags = true
+[diff]
+	renames = copies
+	indentHeuristic = true
+	colorMoved = default
 
-[pull]
-	ff = only
-	default = current
+[difftool]
+	prompt = false
 
-[checkout]
-	defaultRemote = origin
+[difftool "sourcetree"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+	path =
 
-[include]
-  path = ~/.gitconfig.local
+[fetch]
+	prune = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -110,24 +75,39 @@
 	required = true
 	process = git-lfs filter-process
 
-[fetch]
-	prune = true
+[help]
+	autocorrect = 1
 
-[stash]
-	showPatch = true
+[include]
+  path = ~/.gitconfig.local
+
+[interactive]
+    diffFilter = delta --color-only
 
 [log]
-	date = relative
+	date = human
+
+[merge]
+	conflictstyle = diff3
+	defaultToUpstream = true
+
+[mergetool]
+	prompt = false
+
+[mergetool "sourcetree"]
+	cmd = code --wait $MERGED
+	trustExitCode = true
+
+[pull]
+	ff = only
+	default = current
+
+[push]
+	default = current
+	followTags = true
 
 [protocol]
 	version = 2
 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-
-[credential]
-	helper = osxkeychain
+[stash]
+	showPatch = true

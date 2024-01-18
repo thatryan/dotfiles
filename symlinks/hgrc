@@ -1,7 +1,7 @@
 # example user config (see 'hg help config' for more info)
 [ui]
 # name and email, e.g.
-# username = Jane Doe <jdoe@example.com>
+username = Ryan Olson <rolson@dealerinspire.com>
 
 # We recommend enabling tweakdefaults to get slight improvements to
 # the UI over time. Make sure to set HGPLAIN in the environment when
