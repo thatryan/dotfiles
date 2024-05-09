@@ -27,6 +27,7 @@
 	lm = log --pretty=format:'* %s (%h)'
 	# Clean up the branches
 	pruneit = !"git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done"
+	pt = !"git push && git push --tags"
 	remotes = remote -v
 	s = status -s
 	sv = status -v
@@ -63,8 +64,8 @@
 	prompt = false
 
 [difftool "sourcetree"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-	path =
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
 
 [fetch]
 	prune = true
@@ -95,7 +96,7 @@
 	prompt = false
 
 [mergetool "sourcetree"]
-	cmd = code --wait $MERGED
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 [pull]
@@ -111,3 +112,8 @@
 
 [stash]
 	showPatch = true
+[user]
+	name = Ryan Olson
+	email = rolson@dealerinspire.com
+[commit]
+	template = /Users/thatryan/.stCommitMsg

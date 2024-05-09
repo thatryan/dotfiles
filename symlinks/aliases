@@ -11,6 +11,9 @@ alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pa
 # Kubernetes
 alias lndi-inventory='export AWS_PROFILE=inventory-non-prod-423154430651 ; saml2aws login -a inventory-non-prod-423154430651'
 alias k="kubectl "
+alias kns="kubens "
+alias kctx="kubectx "
+alias kpods="kubectl -n api-infrastructure get pods"
 alias pstorm="open -na 'PhpStorm.app'"
 
 # | Shorter Commands
@@ -18,12 +21,11 @@ alias rm="rm -fir"
 
 # Editing
 alias aliases='subl ~/dotfiles/symlinks/aliases'
+alias vspace='subl ~/code/dealerinspire/DI.code-workspace'
 alias zs='subl ~/.zshrc'
 alias hosts='sudo subl /etc/hosts'
-alias nn='nvm use 14'
-
-# Flush Directory Service cache
-alias flush="dscacheutil -flushcache"
+alias n14='nvm use 14'
+alias n13='nvm use 13'
 
 # Enrollments API
 alias enrol='cd ~/code/enrollment-core-api'
@@ -44,6 +46,8 @@ alias dreboot="docker-compose -f $DI_WP_DOCKER/docker-compose.yml down && docker
 alias dredis='docker exec -it di-wp-docker-redis-1 redis-cli'
 alias fredis='echo FLUSHALL | docker exec di-wp-docker_redis_1 redis-cli'
 alias dtoggle='docker exec -it di-wp-docker_web_1 xdebug-toggle'
+alias resite='env APPLICATION_ENV=local php bootstrap/clear_cache.php'
+alias reforms='env APPLICATION_ENV=local php bootstrap/rebuild_forms.php ignore_page_errors=true use_oem_make_forms='
 
 #Alias for navigating the DI WordPress directory
 export DI_HOME_DIR="/Users/$(whoami)/code/dealerinspire/dealerinspire-core/dealer-inspire"
