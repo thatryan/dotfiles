@@ -23,11 +23,12 @@ Order matters — follow this sequence:
 2. `xcode-select --install` — CLI tools (required before Homebrew)
 3. Install Homebrew manually
 4. Sign into the App Store (required before `mas` installs)
-5. Clone repo to `~/dotfiles`
+5. Clone repo (conventionally to `~/dotfiles`)
 6. `./macos/bootstrap` — creates directories and symlinks shared config files
 7. Run Brewfiles in order: `Brewfile` → `Brewfile.fonts` → `Brewfile.mas`
 8. Sign into Dropbox and let it sync, then link local config files (see below)
-9. Open Xcode once or run `sudo xcodebuild -runFirstLaunch`
+9. `./macos/defaults.sh` — applies macOS system preferences
+10. Open Xcode once or run `sudo xcodebuild -runFirstLaunch`
 
 Manual installs not in Brewfile: Microsoft Office (setup.office.com), Spencer App.
 
@@ -103,9 +104,11 @@ Work: `~/code`
 
 ## What Claude should know
 - `macos/bootstrap` handles symlinking — understand what it does before suggesting manual symlink changes
+- The bootstrap script is self-locating (derives its path from `BASH_SOURCE[0]`) — the repo does not have to live at `~/dotfiles`
 - The three Brewfiles are intentionally split — don't consolidate them
 - `~/.gitconfig.local` must exist for git identity to work; it's never committed
 - Don't suggest hardcoding credentials or tokens anywhere in this repo
 - Sublime Text and PhpStorm are the editors in use — not VS Code
 - Some zsh files are optional (work/machine-specific) and only sourced if present — that's intentional
-- macOS defaults in `defaults.sh` are intentional — don't change without confirming
+- `zprofile` runs `brew shellenv` which exports `HOMEBREW_PREFIX` — zsh config files depend on this being set, so load order matters
+- `defaults.sh` covers a comprehensive set of macOS preferences (Finder, Dock, keyboard, typing, trackpad, screenshots, windows, privacy, etc.) — don't change without confirming; see `notes.md` for settings that cannot be scripted
