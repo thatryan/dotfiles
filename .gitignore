@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / temp
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# Python
+__pycache__/
+*.pyc
+
+# Archives / exports
+*.zip
+*.tar
+*.gz
+
+# IDE noise
+.idea/
+.vscode/
+
+# Local/private machine files that should not be committed
+.gitconfig.local
+.gitconfig.machine
+zsh/machine-work.zsh
+zsh/aliases-work.zsh
+zsh/*.local.zsh
+
+# Backup/output dirs
+dotfiles-backup/

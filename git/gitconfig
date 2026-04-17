@@ -1,0 +1,110 @@
+[alias]
+	aliases = config --get-regexp alias
+	amend = commit --amend --reuse-message=HEAD
+	b = branch
+	branches = branch -a
+	co = switch
+	cob = switch -c
+	cp = cherry-pick
+	d = "!git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	last = switch -
+	l = log -n 20 --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	ll = log --graph --abbrev-commit --pretty=oneline
+	lm = log --pretty=format:'* %s (%h)'
+	lo = log --oneline
+	nah = "!f(){ git reset --hard; git clean -df; if [ -d .git/rebase-apply ] || [ -d .git/rebase-merge ]; then git rebase --abort; fi; }; f"
+	pruneit = "!f() { git fetch -p; git branch -vv | awk '/: gone]/{print $1}' | while read -r b; do [ -n \"$b\" ] && git branch -D \"$b\"; done; }; f"
+	pt = "!git push && git push --tags"
+	remotes = remote -v
+	s = status -s
+	sb = status -sb
+	sv = status -v
+	tags = tag -l
+	unstage = restore --staged
+
+[branch]
+	sort = committerdate
+
+[checkout]
+	defaultRemote = origin
+
+[color]
+	ui = auto
+
+[column]
+	ui = auto
+
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
+	editor = nvim
+	pager = delta
+
+[credential]
+	helper = osxkeychain
+
+[delta]
+	navigate = true
+
+[diff]
+	tool = Kaleidoscope
+	renames = copies
+	indentHeuristic = true
+	colorMoved = default
+	algorithm = histogram
+
+[difftool]
+	prompt = false
+
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[help]
+	autocorrect = prompt
+
+[include]
+	path = ~/.gitconfig.local
+
+[init]
+	defaultBranch = main
+
+[interactive]
+	diffFilter = delta --color-only
+
+[log]
+	date = human
+
+[merge]
+	tool = Kaleidoscope
+	conflictstyle = zdiff3
+
+[mergetool]
+	prompt = false
+
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+
+[pull]
+	ff = only
+
+[push]
+	default = current
+	followTags = true
+
+[protocol]
+	version = 2
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[stash]
+	showPatch = true
+
+[tag]
+	sort = version:refname

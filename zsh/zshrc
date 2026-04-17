@@ -1,0 +1,18 @@
+source ~/.config/zsh/aliases.zsh
+source ~/.config/zsh/functions.zsh
+source ~/.config/zsh/plugins.zsh
+source ~/.config/zsh/path.zsh
+
+[[ -f ~/.config/zsh/machine-work.zsh ]] && source ~/.config/zsh/machine-work.zsh
+[[ -f ~/.config/zsh/aliases-work.zsh ]] && source ~/.config/zsh/aliases-work.zsh
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+
+[[ -o interactive ]] && echo "Tip: type remindme to see custom shell helpers."

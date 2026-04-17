@@ -1,0 +1,13 @@
+# Mac App Store apps
+mas "Amphetamine", id: 937984704
+mas "Apple Configurator", id: 1037126344
+mas "Compressor", id: 6746516157
+mas "Final Cut Pro", id: 1631624924
+mas "Keynote", id: 361285480
+mas "Logic Pro", id: 1615087040
+mas "MainStage", id: 6746637089
+mas "Motion", id: 6746637149
+mas "Numbers", id: 361304891
+mas "Pages", id: 361309726
+mas "Pixelmator Pro", id: 6746662575
+mas "Xcode", id: 497799835

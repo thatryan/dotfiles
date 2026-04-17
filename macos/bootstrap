@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_DIR="${HOME}/dotfiles"
+BACKUP_DIR="${HOME}/dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+
+echo "==> Creating directories"
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.config/zsh"
+mkdir -p "${HOME}/.composer"
+mkdir -p "${HOME}/.nvm"
+mkdir -p "${HOME}/.local/bin"
+
+backup_and_link() {
+  local source="$1"
+  local target="$2"
+
+  if [[ ! -e "$source" ]]; then
+    echo "Skipping missing source: $source"
+    return 0
+  fi
+
+  if [[ -L "$target" ]]; then
+    local current
+    current="$(readlink "$target" || true)"
+    if [[ "$current" == "$source" ]]; then
+      echo "Already linked: $target -> $source"
+      return 0
+    fi
+  fi
+
+  if [[ -e "$target" || -L "$target" ]]; then
+    mkdir -p "$BACKUP_DIR"
+    echo "Backing up $target -> $BACKUP_DIR"
+    mv "$target" "$BACKUP_DIR"/
+  fi
+
+  echo "Linking $target -> $source"
+  ln -s "$source" "$target"
+}
+
+echo
+echo "==> Linking home dotfiles"
+backup_and_link "${DOTFILES_DIR}/git/gitconfig" "${HOME}/.gitconfig"
+backup_and_link "${DOTFILES_DIR}/git/gitignore_global" "${HOME}/.gitignore_global"
+backup_and_link "${DOTFILES_DIR}/zsh/zshrc" "${HOME}/.zshrc"
+backup_and_link "${DOTFILES_DIR}/zsh/zprofile" "${HOME}/.zprofile"
+backup_and_link "${DOTFILES_DIR}/zsh/zshenv" "${HOME}/.zshenv"
+
+if [[ -f "${DOTFILES_DIR}/zsh/hushlogin" ]]; then
+  backup_and_link "${DOTFILES_DIR}/zsh/hushlogin" "${HOME}/.hushlogin"
+fi
+
+echo
+echo "==> Linking shared zsh config"
+backup_and_link "${DOTFILES_DIR}/zsh/aliases.zsh" "${HOME}/.config/zsh/aliases.zsh"
+backup_and_link "${DOTFILES_DIR}/zsh/functions.zsh" "${HOME}/.config/zsh/functions.zsh"
+backup_and_link "${DOTFILES_DIR}/zsh/plugins.zsh" "${HOME}/.config/zsh/plugins.zsh"
+backup_and_link "${DOTFILES_DIR}/zsh/path.zsh" "${HOME}/.config/zsh/path.zsh"
+
+echo
+echo "==> Linking app config"
+backup_and_link "${DOTFILES_DIR}/wezterm/wezterm.lua" "${HOME}/.wezterm.lua"
+backup_and_link "${DOTFILES_DIR}/starship/starship.toml" "${HOME}/.config/starship.toml"
+
+echo
+echo "==> Bootstrap complete"
+
+if [[ -d "$BACKUP_DIR" ]]; then
+  echo "Backups saved to: $BACKUP_DIR"
+fi
+
+echo
+echo "Next steps:"
+echo "  1. Link local/private files from Dropbox:"
+echo "     ln -s ~/Dropbox/local-dotfiles/.gitconfig.personal ~/.gitconfig.local"
+echo "     or"
+echo "     ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local"
+echo
+echo "     ln -s ~/Dropbox/dotfiles-local/laptop-work.zsh ~/.config/zsh/machine-work.zsh"
+echo "     ln -s ~/Dropbox/dotfiles-local/aliases-work.zsh ~/.config/zsh/aliases-work.local.zsh"
+echo
+echo "  2. Run:"
+echo "     brew bundle --file ~/dotfiles/homebrew/Brewfile"
+echo "     brew bundle --file ~/dotfiles/homebrew/Brewfile.fonts"
+echo "     brew bundle --file ~/dotfiles/homebrew/Brewfile.mas"
+echo
+echo "  3. Run macOS defaults:"
+echo "     ./macos/defaults.sh"
+echo
+echo "  4. Manual installs:"
+echo "     Microsoft Office: https://setup.office.com/"
+echo "     Spencer App: https://macspencer.app/"

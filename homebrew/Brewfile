@@ -1,0 +1,74 @@
+# Taps
+tap "shivammathur/php"
+
+# CLI / shell
+brew "composer"
+brew "eza"
+brew "gh"
+brew "git"
+brew "git-delta"
+brew "jq"
+brew "lazygit"
+brew "mas"
+brew "neovim"
+brew "nvm"
+brew "starship"
+brew "zoxide"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-syntax-highlighting"
+
+# PHP
+brew "php-cs-fixer"
+brew "phpunit"
+brew "shivammathur/php/php"
+
+# Core apps / system utilities
+cask "1password"
+cask "backblaze"
+cask "backblaze-restore"
+cask "bartender"
+cask "carbon-copy-cloner"
+cask "cleanshot"
+cask "dropbox"
+cask "maccy"
+cask "monarch"
+cask "notion"
+cask "rectangle-pro"
+cask "reminders-menubar"
+cask "wezterm"
+
+# Browsers / communication
+cask "discord"
+cask "firefox"
+cask "google-chrome"
+cask "zoom"
+
+# Developer apps
+cask "coderunner"
+cask "datagrip"
+cask "imageoptim"
+cask "phpstorm"
+cask "postman"
+cask "sf-symbols"
+cask "sublime-text"
+cask "tableplus"
+cask "transmit"
+cask "typora"
+
+# Writing / typing / text helpers
+cask "name-mangler"
+cask "pixelsnap"
+cask "sip-app"
+cask "typinator"
+
+# Hardware / desk / creator tools
+cask "elgato-control-center"
+cask "elgato-stream-deck"
+cask "insta360-link-controller"
+cask "logi-options+"
+
+# Media / creative apps
+cask "logos"
+cask "obs"
