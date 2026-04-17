@@ -49,12 +49,12 @@ Shared sourced files (in `~/.config/zsh/`):
 - `path.zsh`
 
 Optional local/work files (not committed, sourced if present):
-- `machine-work.zsh`
+- `laptop-work.zsh`
 - `aliases-work.zsh`
 
-Prompt: Starship — config at `~/.config/starship/starship.toml` (symlinked from repo).
+Prompt: Starship — config at `~/.config/starship.toml` (symlinked from repo).
 
-Terminal: WezTerm — config at `~/.config/wezterm/wezterm.lua` (symlinked from repo).
+Terminal: WezTerm — config at `~/.wezterm.lua` (symlinked from repo).
 
 ## Git config
 Global config committed at `git/gitconfig`.

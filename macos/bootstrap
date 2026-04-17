@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DOTFILES_DIR="${HOME}/dotfiles"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BACKUP_DIR="${HOME}/dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 
 echo "==> Creating directories"
@@ -77,8 +77,8 @@ echo "     ln -s ~/Dropbox/local-dotfiles/.gitconfig.personal ~/.gitconfig.local
 echo "     or"
 echo "     ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local"
 echo
-echo "     ln -s ~/Dropbox/dotfiles-local/laptop-work.zsh ~/.config/zsh/machine-work.zsh"
-echo "     ln -s ~/Dropbox/dotfiles-local/aliases-work.zsh ~/.config/zsh/aliases-work.local.zsh"
+echo "     ln -s ~/Dropbox/dotfiles-local/laptop-work.zsh ~/.config/zsh/laptop-work.zsh"
+echo "     ln -s ~/Dropbox/dotfiles-local/aliases-work.zsh ~/.config/zsh/aliases-work.zsh"
 echo
 echo "  2. Run:"
 echo "     brew bundle --file ~/dotfiles/homebrew/Brewfile"

@@ -16,6 +16,7 @@ __pycache__/
 
 # Archives / exports
 *.zip
+!jetbrains/*.zip
 *.tar
 *.gz
 
@@ -26,7 +27,7 @@ __pycache__/
 # Local/private machine files that should not be committed
 .gitconfig.local
 .gitconfig.machine
-zsh/machine-work.zsh
+zsh/laptop-work.zsh
 zsh/aliases-work.zsh
 zsh/*.local.zsh
 

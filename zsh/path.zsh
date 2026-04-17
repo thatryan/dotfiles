@@ -6,4 +6,4 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
-[[ -s "/opt/homebrew/opt/nvm/nvm.sh" ]] && source "/opt/homebrew/opt/nvm/nvm.sh"
+[[ -s "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh" ]] && source "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh"

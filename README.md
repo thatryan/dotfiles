@@ -122,7 +122,7 @@ ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local
 ### Work-only zsh files
 
 ```bash
-ln -s ~/Dropbox/dotfiles-local/laptop-work.zsh ~/.config/zsh/machine-work.zsh
+ln -s ~/Dropbox/dotfiles-local/laptop-work.zsh ~/.config/zsh/laptop-work.zsh
 ln -s ~/Dropbox/dotfiles-local/aliases-work.zsh ~/.config/zsh/aliases-work.zsh
 ```
 
@@ -197,7 +197,7 @@ Shared sourced files:
 
 Optional local/work files:
 
-- `machine-work.zsh`
+- `laptop-work.zsh`
 - `aliases-work.zsh`
 
 ## Git config layout
@@ -246,3 +246,5 @@ Also use JetBrains Backup and Sync if enabled.
 - Verify `xcode-select -p` and switch to `/Applications/Xcode.app` if needed.
 - `macos/bootstrap` should create `~/.config/zsh` and place/symlink the shared zsh files there.
 - Some machine/work config is intentionally kept out of the repo and linked in later from Dropbox.
+- `defaults.sh` sets "displays have separate spaces" — this requires a logout to take effect.
+- `defaults.sh` does not touch screenshot hotkeys — disable them manually in System Settings → Keyboard → Keyboard Shortcuts → Screenshots so they don't conflict with CleanShot.
