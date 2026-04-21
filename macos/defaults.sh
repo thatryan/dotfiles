@@ -3,6 +3,15 @@ set -euo pipefail
 
 echo "Applying macOS defaults..."
 
+# Keep sudo alive for the duration of the script
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# Computer name
+sudo scutil --set ComputerName "thatryan-air"
+sudo scutil --set LocalHostName "thatryan-air"
+sudo scutil --set HostName "thatryan-air"
+
 # ── Finder ────────────────────────────────────────────────────────────────────
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
@@ -18,6 +27,9 @@ defaults write com.apple.finder FinderSpawnTab -bool true
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
+# Desktop / Stage Manager
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+
 # ── Dock ──────────────────────────────────────────────────────────────────────
 defaults write com.apple.dock magnification -bool false
 defaults write com.apple.dock autohide -bool true
@@ -27,6 +39,26 @@ defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mineffect -string "scale"
 defaults write com.apple.dock minimize-to-application -bool true
 defaults write com.apple.dock launchanim -bool false
+
+# ── Menu Bar Clock ────────────────────────────────────────────────────────────
+defaults write com.apple.menuextra.clock IsAnalog -bool false
+defaults write com.apple.menuextra.clock ShowDate -int 1
+defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+defaults write com.apple.menuextra.clock Show24Hour -bool false
+defaults write com.apple.menuextra.clock ShowSeconds -bool false
+
+# ── Menu Bar Battery ──────────────────────────────────────────────────────────
+defaults write com.apple.controlcenter BatteryShowPercentage -bool true
+
+# ── Power Management ──────────────────────────────────────────────────────────
+sudo pmset -b displaysleep 5
+sudo pmset -b sleep 15
+sudo pmset -b powernap 0
+sudo pmset -b tcpkeepalive 0
+sudo pmset -c displaysleep 30
+sudo pmset -c sleep 0
+sudo pmset -c powernap 1
+sudo pmset -c tcpkeepalive 1
 
 # ── Mission Control / Spaces ──────────────────────────────────────────────────
 # Requires logout to take effect
@@ -65,7 +97,7 @@ defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
 
 # ── Scrolling ─────────────────────────────────────────────────────────────────
 # Click in scrollbar jumps to that position instead of paging
-defaults write NSGlobalDomain AppleScrollerPagingBehavior -bool false
+defaults write NSGlobalDomain AppleScrollerPagingBehavior -bool true
 
 # ── TextEdit ──────────────────────────────────────────────────────────────────
 defaults write com.apple.TextEdit RichText -int 0
@@ -74,5 +106,7 @@ killall Finder || true
 killall Dock || true
 
 echo ""
-echo "Note: 'displays have separate spaces' requires a logout to take effect."
+echo "Notes:"
+echo "  - 'Displays have separate spaces' requires a logout to take effect."
+echo "  - Keyboard repeat settings may require a full restart to apply."
 echo "Done."

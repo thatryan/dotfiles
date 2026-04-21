@@ -76,6 +76,16 @@ git clone https://github.com/thatryan/dotfiles.git
 cd ~/dotfiles
 ```
 
+### Set computer name
+
+> Personal Mac only, on work Mac, comment this out in macos/defaults.sh:
+
+```bash
+sudo scutil --set ComputerName "Ryan-Air"
+sudo scutil --set LocalHostName "Ryan-Air"
+sudo scutil --set HostName "Ryan-Air"
+```
+
 ### 6. Run bootstrap
 
 This should create needed directories and symlink the shared config files.
