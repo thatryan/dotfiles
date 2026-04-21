@@ -81,9 +81,9 @@ cd ~/dotfiles
 > Personal Mac only, on work Mac, comment this out in macos/defaults.sh:
 
 ```bash
-sudo scutil --set ComputerName "Ryan-Air"
-sudo scutil --set LocalHostName "Ryan-Air"
-sudo scutil --set HostName "Ryan-Air"
+sudo scutil --set ComputerName "thatryan-air"
+sudo scutil --set LocalHostName "thatryan-air"
+sudo scutil --set HostName "thatryan-air"
 ```
 
 ### 6. Run bootstrap
