@@ -37,6 +37,7 @@ cask "monarch"
 cask "notion"
 cask "rectangle-pro"
 cask "reminders-menubar"
+cask "typinator"
 cask "wezterm"
 
 # Browsers / communication
