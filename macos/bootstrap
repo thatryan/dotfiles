@@ -5,11 +5,14 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BACKUP_DIR="${HOME}/dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 
 echo "==> Creating directories"
+mkdir -p "${HOME}/.ssh"
 mkdir -p "${HOME}/.config"
 mkdir -p "${HOME}/.config/zsh"
 mkdir -p "${HOME}/.composer"
 mkdir -p "${HOME}/.nvm"
 mkdir -p "${HOME}/.local/bin"
+
+chmod 700 "${HOME}/.ssh"
 
 backup_and_link() {
   local source="$1"
@@ -39,8 +42,10 @@ backup_and_link() {
   ln -s "$source" "$target"
 }
 
+
 echo
 echo "==> Linking home dotfiles"
+backup_and_link "${DOTFILES_DIR}/ssh/config" "${HOME}/.ssh/config"
 backup_and_link "${DOTFILES_DIR}/git/gitconfig" "${HOME}/.gitconfig"
 backup_and_link "${DOTFILES_DIR}/git/gitignore_global" "${HOME}/.gitignore_global"
 backup_and_link "${DOTFILES_DIR}/zsh/zshrc" "${HOME}/.zshrc"
@@ -63,9 +68,16 @@ echo "==> Linking app config"
 backup_and_link "${DOTFILES_DIR}/wezterm/wezterm.lua" "${HOME}/.wezterm.lua"
 backup_and_link "${DOTFILES_DIR}/starship/starship.toml" "${HOME}/.config/starship.toml"
 
-echo
+if [[ -e "${HOME}/.ssh/config" ]]; then
+  chmod 600 "${HOME}/.ssh/config"
+fi
+
 echo "==> Permission fix for homebrew stuffs"
-chmod go-w /opt/homebrew/share /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions
+if [[ -d /opt/homebrew/share ]]; then
+  chmod go-w /opt/homebrew/share /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions
+else
+  echo "Homebrew not installed yet, skipping permission fix"
+fi
 
 echo
 echo "==> Bootstrap complete"
