@@ -54,7 +54,7 @@ defaults write com.apple.controlcenter BatteryShowPercentage -bool true
 sudo pmset -b displaysleep 5
 sudo pmset -b sleep 15
 sudo pmset -b powernap 0
-sudo pmset -b tcpkeepalive 0
+sudo pmset -b tcpkeepalive 1
 sudo pmset -c displaysleep 30
 sudo pmset -c sleep 0
 sudo pmset -c powernap 1
@@ -94,6 +94,9 @@ defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
 defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
 # No margins on tiled windows
 defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false
+defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false
 
 # ── Scrolling ─────────────────────────────────────────────────────────────────
 # Click in scrollbar jumps to that position instead of paging
@@ -102,6 +105,7 @@ defaults write NSGlobalDomain AppleScrollerPagingBehavior -bool true
 # ── TextEdit ──────────────────────────────────────────────────────────────────
 defaults write com.apple.TextEdit RichText -int 0
 
+rm -f ~/Library/Preferences/com.apple.finder.plist
 killall Finder || true
 killall Dock || true
 

@@ -98,14 +98,21 @@ chmod +x ~/dotfiles/macos/bootstrap ~/dotfiles/macos/defaults.sh
 ### 7. Run the Brewfiles
 
 Run the main Brewfile first. Fonts and MAS apps can wait if needed.
+Try sudo first to stop some pass prompts...
 
 ```bash
+sudo -v
 brew bundle --file ~/dotfiles/homebrew/Brewfile
 brew bundle --file ~/dotfiles/homebrew/Brewfile.fonts
 brew bundle --file ~/dotfiles/homebrew/Brewfile.mas
 ```
 
-### 8. Sign in to Dropbox and let local config sync
+### 8. Setup defaults
+```bash
+./macos/defaults.sh
+```
+
+### 9. Sign in to Dropbox and let local config sync
 
 I keep private / machine-specific files outside this repo in Dropbox.
 

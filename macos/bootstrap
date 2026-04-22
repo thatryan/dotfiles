@@ -64,6 +64,10 @@ backup_and_link "${DOTFILES_DIR}/wezterm/wezterm.lua" "${HOME}/.wezterm.lua"
 backup_and_link "${DOTFILES_DIR}/starship/starship.toml" "${HOME}/.config/starship.toml"
 
 echo
+echo "==> Permission fix for homebrew stuffs"
+chmod go-w /opt/homebrew/share /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions
+
+echo
 echo "==> Bootstrap complete"
 
 if [[ -d "$BACKUP_DIR" ]]; then
@@ -73,9 +77,9 @@ fi
 echo
 echo "Next steps:"
 echo "  1. Link local/private files from Dropbox:"
-echo "     ln -s ~/Dropbox/local-dotfiles/.gitconfig.personal ~/.gitconfig.local"
+echo "     ln -s ~/Dropbox/local-dotfiles/gitconfig.personal ~/.gitconfig.local"
 echo "     or"
-echo "     ln -s ~/Dropbox/local-dotfiles/.gitconfig.work ~/.gitconfig.local"
+echo "     ln -s ~/Dropbox/local-dotfiles/gitconfig.work ~/.gitconfig.local"
 echo
 echo "     ln -s ~/Dropbox/dotfiles-local/laptop-work.zsh ~/.config/zsh/laptop-work.zsh"
 echo "     ln -s ~/Dropbox/dotfiles-local/aliases-work.zsh ~/.config/zsh/aliases-work.zsh"
@@ -89,5 +93,5 @@ echo "  3. Run macOS defaults:"
 echo "     ./macos/defaults.sh"
 echo
 echo "  4. Manual installs:"
-echo "     Microsoft Office: https://setup.office.com/"
+echo "     Microsoft Office: https://account.microsoft.com/services"
 echo "     Spencer App: https://macspencer.app/"

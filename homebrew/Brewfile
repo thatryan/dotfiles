@@ -20,9 +20,9 @@ brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 
 # PHP
+brew "shivammathur/php/php"
 brew "php-cs-fixer"
 brew "phpunit"
-brew "shivammathur/php/php"
 
 # Core apps / system utilities
 cask "1password"
@@ -61,7 +61,6 @@ cask "typora"
 cask "name-mangler"
 cask "pixelsnap"
 cask "sip-app"
-cask "typinator"
 
 # Hardware / desk / creator tools
 cask "elgato-control-center"
