@@ -191,6 +191,11 @@ These are not handled in the Brewfile.
 - Source: https://macspencer.app/
 - Priority: later
 
+### Backblaze
+
+Install manually from https://www.backblaze.com/download — the Homebrew cask
+doesn't handle the system extension approval correctly on fresh installs.
+
 ## zsh layout
 
 Shared zsh files are expected in:

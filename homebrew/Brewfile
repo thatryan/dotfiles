@@ -26,8 +26,6 @@ brew "phpunit"
 
 # Core apps / system utilities
 cask "1password"
-cask "backblaze"
-cask "backblaze-restore"
 cask "bartender"
 cask "carbon-copy-cloner"
 cask "cleanclip"
